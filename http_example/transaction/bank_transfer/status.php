@@ -19,7 +19,7 @@ $request->setReference("test_20191123132233");
 $request->setOrderNo("20019212912901281821982");
 
 $merchantTransaction->setBankTransferStatusData($request);
-$response = $merchantTransaction->getBankTransferStatus();
+$response = $merchantTransaction->bankTransferStatus();
 
 dump("status : " . $response->getCode());
 

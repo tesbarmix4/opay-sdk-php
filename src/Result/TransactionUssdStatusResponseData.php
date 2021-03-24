@@ -126,6 +126,10 @@ class TransactionUssdStatusResponseData
         $this->status = $status;
     }
 
+    public function toArray(): array
+    {
+        return (array)$this;
+    }
 
     public static function cast(TransactionUssdStatusResponseData $destination, ?\stdClass $source): TransactionUssdStatusResponseData
     {

@@ -170,6 +170,10 @@ class TransactionBankTransferInitializeResponseData
         $this->transferAccount = $transferAccount;
     }
 
+    public function toArray(): array
+    {
+        return (array)$this;
+    }
 
     public static function cast(TransactionBankTransferInitializeResponseData $destination, ?\stdClass $source): TransactionBankTransferInitializeResponseData
     {

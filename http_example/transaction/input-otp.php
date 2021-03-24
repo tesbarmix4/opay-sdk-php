@@ -19,7 +19,7 @@ $request->setReference("test_20191123132233");
 $request->setOtp("123456");
 
 $merchantTransaction->setInputOtpData($request);
-$response = $merchantTransaction->getInputOtp();
+$response = $merchantTransaction->inputOtp();
 
 dump("status : ". $response->getCode());
 

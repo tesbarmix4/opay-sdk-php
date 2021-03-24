@@ -4,7 +4,7 @@
 namespace Opay\Result;
 
 
-class TransactionBankTransferStatusResponseData
+class CertPayVerifyOtpResponseData
 {
     /**
      * Order number from OPay payment
@@ -25,11 +25,16 @@ class TransactionBankTransferStatusResponseData
     private $amount;
 
     /**
+     * User's mobile phone number. e.g. +2349876543210
+     * @var string
+     */
+    private $userPhone;
+
+    /**
      * Currency charge should be performed in. Default is NGN
      * @var string
      */
     private $currency;
-
 
     /**
      * INITIAL
@@ -45,6 +50,25 @@ class TransactionBankTransferStatusResponseData
      * @var string
      */
     private $status;
+
+
+    public static function cast(CertPayVerifyOtpResponseData $destination, ?\stdClass $source): CertPayVerifyOtpResponseData
+    {
+        if ($source) {
+            $sourceReflection = new \ReflectionObject($source);
+            $sourceProperties = $sourceReflection->getProperties();
+            foreach ($sourceProperties as $sourceProperty) {
+                $name = $sourceProperty->getName();
+                $destination->{$name} = $source->$name;
+            }
+        }
+        return $destination;
+    }
+
+    public function toArray(): array
+    {
+        return (array)$this;
+    }
 
     /**
      * @return string
@@ -97,6 +121,22 @@ class TransactionBankTransferStatusResponseData
     /**
      * @return string
      */
+    public function getUserPhone(): string
+    {
+        return $this->userPhone;
+    }
+
+    /**
+     * @param string $userPhone
+     */
+    public function setUserPhone(string $userPhone): void
+    {
+        $this->userPhone = $userPhone;
+    }
+
+    /**
+     * @return string
+     */
     public function getCurrency(): string
     {
         return $this->currency;
@@ -126,21 +166,5 @@ class TransactionBankTransferStatusResponseData
         $this->status = $status;
     }
 
-    public function toArray(): array
-    {
-        return (array)$this;
-    }
 
-    public static function cast(TransactionBankTransferStatusResponseData $destination, ?\stdClass $source): TransactionBankTransferStatusResponseData
-    {
-        if ($source) {
-            $sourceReflection = new \ReflectionObject($source);
-            $sourceProperties = $sourceReflection->getProperties();
-            foreach ($sourceProperties as $sourceProperty) {
-                $name = $sourceProperty->getName();
-                $destination->{$name} = $source->$name;
-            }
-        }
-        return $destination;
-    }
 }

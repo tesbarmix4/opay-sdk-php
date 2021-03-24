@@ -20,7 +20,7 @@ $request->setReference("test_201911231322334");
 $request->setOrderNo("20019212912901281821982");
 
 $merchantTransaction->setUssdStatusData($request);
-$response = $merchantTransaction->getUssdStatus();
+$response = $merchantTransaction->ussdStatus();
 
 dump("status : " . $response->getCode());
 

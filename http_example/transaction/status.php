@@ -20,7 +20,7 @@ $request->setOrderNo("20019212912901281821982");
 $request->setReference("test_20191123132233");
 
 $merchantTransaction->setStatusData($request);
-$response = $merchantTransaction->getStatus();
+$response = $merchantTransaction->status();
 
 dump("status : " . $response->getCode());
 

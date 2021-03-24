@@ -23,7 +23,7 @@ class MerchantBalances extends Merchant
         parent::__construct($environmentBaseUrl, $pbKey, $pvKey, $merchantId, $proxyAddress);
     }
 
-    public function getBalances(): Response
+    public function balances(): Response
     {
 
         $response = $this->networkClient->post("/api/v3/balances", $this->buildRequestOptions([

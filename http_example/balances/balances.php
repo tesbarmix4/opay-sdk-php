@@ -4,7 +4,7 @@ require_once('../init.php');
 use Opay\Payload\BalancesRequest;
 
 $merchantBalances->setBalancesData(new BalancesRequest());
-$response = $merchantBalances->getBalances();
+$response = $merchantBalances->balances();
 
 dump("status : ". $response->getCode());
 

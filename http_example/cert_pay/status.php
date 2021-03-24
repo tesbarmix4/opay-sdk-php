@@ -1,8 +1,8 @@
 <?php
 require_once('../init.php');
 
-use Opay\MerchantCharge;
-use Opay\Payload\ChargeStatusRequest;
+use Opay\MerchantCertPay;
+use Opay\Payload\CertPayStatusRequest;
 
 /**
  * @var  $endpointBaseUrl
@@ -10,15 +10,16 @@ use Opay\Payload\ChargeStatusRequest;
  * @var  $prvKey
  * @var  $merchantId
  */
-$merchantCharge = new MerchantCharge($endpointBaseUrl, $pubKey, $prvKey, $merchantId);
+$merchantCertPay = new MerchantCertPay($endpointBaseUrl, $pubKey, $prvKey, $merchantId);
 
 
-$request = new ChargeStatusRequest();
-$request->setReference("test_201911231322334");
+$request = new CertPayStatusRequest();
+$request->setReference("test_20191123132233");
 $request->setOrderNo("20019212912901281821982");
 
-$merchantCharge->setChargeStatusData($request);
-$response = $merchantCharge->status();
+
+$merchantCertPay->setStatusData($request);
+$response = $merchantCertPay->status();
 
 dump("status : " . $response->getCode());
 

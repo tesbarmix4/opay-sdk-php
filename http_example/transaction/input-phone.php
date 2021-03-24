@@ -19,7 +19,7 @@ $request->setReference("test_20191123132233");
 $request->setPhone("+23401234567889");
 
 $merchantTransaction->setInputPhoneData($request);
-$response = $merchantTransaction->getInputPhone();
+$response = $merchantTransaction->inputPhone();
 
 dump("status : ". $response->getCode());
 

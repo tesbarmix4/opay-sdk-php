@@ -4,7 +4,7 @@
 namespace Opay\Result;
 
 
-class TransactionBankTransferStatusResponseData
+class CertPayInitializeResponseData
 {
     /**
      * Order number from OPay payment
@@ -30,7 +30,6 @@ class TransactionBankTransferStatusResponseData
      */
     private $currency;
 
-
     /**
      * INITIAL
      * PENDING
@@ -45,6 +44,24 @@ class TransactionBankTransferStatusResponseData
      * @var string
      */
     private $status;
+
+    public static function cast(CertPayInitializeResponseData $destination, ?\stdClass $source): CertPayInitializeResponseData
+    {
+        if ($source) {
+            $sourceReflection = new \ReflectionObject($source);
+            $sourceProperties = $sourceReflection->getProperties();
+            foreach ($sourceProperties as $sourceProperty) {
+                $name = $sourceProperty->getName();
+                $destination->{$name} = $source->$name;
+            }
+        }
+        return $destination;
+    }
+
+    public function toArray(): array
+    {
+        return (array)$this;
+    }
 
     /**
      * @return string
@@ -126,21 +143,5 @@ class TransactionBankTransferStatusResponseData
         $this->status = $status;
     }
 
-    public function toArray(): array
-    {
-        return (array)$this;
-    }
 
-    public static function cast(TransactionBankTransferStatusResponseData $destination, ?\stdClass $source): TransactionBankTransferStatusResponseData
-    {
-        if ($source) {
-            $sourceReflection = new \ReflectionObject($source);
-            $sourceProperties = $sourceReflection->getProperties();
-            foreach ($sourceProperties as $sourceProperty) {
-                $name = $sourceProperty->getName();
-                $destination->{$name} = $source->$name;
-            }
-        }
-        return $destination;
-    }
 }

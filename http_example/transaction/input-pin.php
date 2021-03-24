@@ -20,7 +20,7 @@ $request->setReference("test_20191123132233");
 $request->setPin("123456");
 
 $merchantTransaction->setInputPinData($request);
-$response = $merchantTransaction->getInputPin();
+$response = $merchantTransaction->inputPin();
 
 dump("status : ". $response->getCode());
 

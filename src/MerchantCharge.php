@@ -28,7 +28,7 @@ class MerchantCharge extends Merchant
     }
 
 
-    public function chargeInitialize(): Response
+    public function initialize(): Response
     {
         $response = $this->networkClient->post("/api/v3/charge/initialize", $this->buildRequestOptions([
             RequestOptions::JSON => $this->chargeInitializeData,
@@ -40,7 +40,7 @@ class MerchantCharge extends Merchant
         return ChargeInitializeResponse::cast(new ChargeInitializeResponse, json_decode($response->getBody()->getContents(), false));
     }
 
-    public function getChargeStatus(): Response
+    public function status(): Response
     {
         $_signature = hash_hmac('sha512', json_encode($this->chargeStatusData), $this->privateKey);
         $response = $this->networkClient->post("/v3/charge/status", $this->buildRequestOptions([

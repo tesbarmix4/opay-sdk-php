@@ -194,6 +194,10 @@ class TransactionStatusResponseData
         $this->failureReason = $failureReason;
     }
 
+    public function toArray(): array
+    {
+        return (array)$this;
+    }
 
     public static function cast(TransactionStatusResponseData $destination, ?\stdClass $source): TransactionStatusResponseData
     {

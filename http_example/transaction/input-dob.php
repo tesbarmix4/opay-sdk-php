@@ -19,7 +19,7 @@ $request->setReference("test_20191123132233");
 $request->setDob("dd/MM/yyyy");
 
 $merchantTransaction->setInputDobData($request);
-$response = $merchantTransaction->getInputDob();
+$response = $merchantTransaction->inputDob();
 
 dump("status : " . $response->getCode());
 

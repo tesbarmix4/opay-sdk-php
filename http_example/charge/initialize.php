@@ -25,7 +25,7 @@ $request->setChargerType("USER");
 $request->setChargerId("156619112022589929");
 
 $merchantCharge->setChargeInitializeData($request);
-$response = $merchantCharge->chargeInitialize();
+$response = $merchantCharge->initialize();
 
 dump("status : " . $response->getCode());
 

@@ -24,7 +24,7 @@ class MerchantBalancesTest extends TestCase
     {
         $_balancesRequest = new BalancesRequest();
         $this->merchantBalances->setBalancesData($_balancesRequest);
-        $response = $this->merchantBalances->getBalances();
+        $response = $this->merchantBalances->balances();
         $this->assertEquals(json_encode($_balancesRequest), json_encode($this->merchantBalances->getBalancesData()));
 
 

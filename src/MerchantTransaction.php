@@ -55,7 +55,7 @@ class MerchantTransaction extends Merchant
         return TransactionInitializeResponse::cast(new TransactionInitializeResponse, json_decode($response->getBody()->getContents(), false));
     }
 
-    public function getInputOtp(): Response
+    public function inputOtp(): Response
     {
         $response = $this->networkClient->post("/api/v3/transaction/input-otp", $this->buildRequestOptions([
             RequestOptions::JSON => $this->inputOtpData,
@@ -67,7 +67,7 @@ class MerchantTransaction extends Merchant
         return TransactionInputOtpResponse::cast(new TransactionInputOtpResponse, json_decode($response->getBody()->getContents(), false));
     }
 
-    public function getInputPhone(): Response
+    public function inputPhone(): Response
     {
         $response = $this->networkClient->post("/api/v3/transaction/input-phone", $this->buildRequestOptions([
             RequestOptions::JSON => $this->inputPhoneData,
@@ -79,7 +79,7 @@ class MerchantTransaction extends Merchant
         return TransactionInputPhoneResponse::cast(new TransactionInputPhoneResponse, json_decode($response->getBody()->getContents(), false));
     }
 
-    public function getInputPin(): Response
+    public function inputPin(): Response
     {
         $response = $this->networkClient->post("/api/v3/transaction/input-pin", $this->buildRequestOptions([
             RequestOptions::JSON => $this->inputPinData,
@@ -91,7 +91,7 @@ class MerchantTransaction extends Merchant
         return TransactionInputPinResponse::cast(new TransactionInputPinResponse, json_decode($response->getBody()->getContents(), false));
     }
 
-    public function getInputDob(): Response
+    public function inputDob(): Response
     {
         $response = $this->networkClient->post("/api/v3/transaction/input-dob", $this->buildRequestOptions([
             RequestOptions::JSON => $this->inputDobData,
@@ -103,7 +103,7 @@ class MerchantTransaction extends Merchant
         return TransactionInputDobResponse::cast(new TransactionInputDobResponse, json_decode($response->getBody()->getContents(), false));
     }
 
-    public function getStatus(): Response
+    public function status(): Response
     {
         $_signature = hash_hmac('sha512', json_encode($this->statusData), $this->privateKey);
         $response = $this->networkClient->post("/v3/transaction/status", $this->buildRequestOptions([
@@ -128,7 +128,7 @@ class MerchantTransaction extends Merchant
         return TransactionBankTransferInitializeResponse::cast(new TransactionBankTransferInitializeResponse, json_decode($response->getBody()->getContents(), false));
     }
 
-    public function getBankTransferStatus(): Response
+    public function bankTransferStatus(): Response
     {
         $_signature = hash_hmac('sha512', json_encode($this->statusData), $this->privateKey);
         $response = $this->networkClient->post("/v3/transaction/bankTransfer/status", $this->buildRequestOptions([
@@ -153,7 +153,7 @@ class MerchantTransaction extends Merchant
         return TransactionUssdInitializeResponse::cast(new TransactionUssdInitializeResponse, json_decode($response->getBody()->getContents(), false));
     }
 
-    public function getUssdStatus(): Response
+    public function ussdStatus(): Response
     {
         $_signature = hash_hmac('sha512', json_encode($this->statusData), $this->privateKey);
         $response = $this->networkClient->post("/v3/transaction/ussd/status", $this->buildRequestOptions([
