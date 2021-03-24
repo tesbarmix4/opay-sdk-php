@@ -106,7 +106,7 @@ class MerchantTransaction extends Merchant
     public function status(): Response
     {
         $_signature = hash_hmac('sha512', json_encode($this->statusData), $this->privateKey);
-        $response = $this->networkClient->post("/v3/transaction/status", $this->buildRequestOptions([
+        $response = $this->networkClient->post("/api/v3/transaction/status", $this->buildRequestOptions([
             RequestOptions::JSON => $this->statusData,
             RequestOptions::HEADERS => [
                 'Authorization' => 'Bearer ' . $_signature,
@@ -131,7 +131,7 @@ class MerchantTransaction extends Merchant
     public function bankTransferStatus(): Response
     {
         $_signature = hash_hmac('sha512', json_encode($this->statusData), $this->privateKey);
-        $response = $this->networkClient->post("/v3/transaction/bankTransfer/status", $this->buildRequestOptions([
+        $response = $this->networkClient->post("/api/v3/transaction/bankTransfer/status", $this->buildRequestOptions([
             RequestOptions::JSON => $this->bankTransferStatusData,
             RequestOptions::HEADERS => [
                 'Authorization' => 'Bearer ' . $_signature,
@@ -156,7 +156,7 @@ class MerchantTransaction extends Merchant
     public function ussdStatus(): Response
     {
         $_signature = hash_hmac('sha512', json_encode($this->statusData), $this->privateKey);
-        $response = $this->networkClient->post("/v3/transaction/ussd/status", $this->buildRequestOptions([
+        $response = $this->networkClient->post("/api/v3/transaction/ussd/status", $this->buildRequestOptions([
             RequestOptions::JSON => $this->ussdStatusData,
             RequestOptions::HEADERS => [
                 'Authorization' => 'Bearer ' . $_signature,

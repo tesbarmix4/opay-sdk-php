@@ -14,10 +14,10 @@ class MerchantTransactionTest extends TestCase
     {
         parent::setUp();
         $this->transaction = new MerchantTransaction(
-            "http://sandbox-cashierapi.opayweb.com",
-            "OPAYPUB16058646510220.420473668870203",
-            "OPAYPRV16058646510230.34019403186305675",
-            "256620112018025"
+            "http://xxxxxxxxxxxxxxx.com",
+            "xxxxxxxxxxxxxxxx",
+            "xxxxxxxxxxxxx",
+            "XXXXXXXXXXXXX"
         );
     }
 

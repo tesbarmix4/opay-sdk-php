@@ -36,7 +36,7 @@ class MerchantInfo extends Merchant
     public function userSendOtp(): Response
     {
         $_signature = hash_hmac('sha512', json_encode($this->userSendOtpData), $this->privateKey);
-        $response = $this->networkClient->post("/v3/info/user/sendOTP", $this->buildRequestOptions([
+        $response = $this->networkClient->post("/api/v3/info/user/sendOTP", $this->buildRequestOptions([
             RequestOptions::JSON => $this->userSendOtpData,
             RequestOptions::HEADERS => [
                 'Authorization' => 'Bearer ' . $_signature,
@@ -49,7 +49,7 @@ class MerchantInfo extends Merchant
 
     public function userCreate(): Response
     {
-        $response = $this->networkClient->post("/v3/info/user/create", $this->buildRequestOptions([
+        $response = $this->networkClient->post("/api/v3/info/user/create", $this->buildRequestOptions([
             RequestOptions::JSON => $this->userCreateData,
             RequestOptions::HEADERS => [
                 'Authorization' => 'Bearer ' . $this->publicKey,
@@ -62,7 +62,7 @@ class MerchantInfo extends Merchant
 
     public function user(): Response
     {
-        $response = $this->networkClient->post("/v3/info/user", $this->buildRequestOptions([
+        $response = $this->networkClient->post("/api/v3/info/user", $this->buildRequestOptions([
             RequestOptions::JSON => $this->userData,
             RequestOptions::HEADERS => [
                 'Authorization' => 'Bearer ' . $this->publicKey,
@@ -76,7 +76,7 @@ class MerchantInfo extends Merchant
     public function userUpdate(): Response
     {
         $_signature = hash_hmac('sha512', json_encode($this->userUpdateData), $this->privateKey);
-        $response = $this->networkClient->post("/v3/info/user/update", $this->buildRequestOptions([
+        $response = $this->networkClient->post("/api/v3/info/user/update", $this->buildRequestOptions([
             RequestOptions::JSON => $this->userUpdateData,
             RequestOptions::HEADERS => [
                 'Authorization' => 'Bearer ' . $_signature,
@@ -89,7 +89,7 @@ class MerchantInfo extends Merchant
 
     public function merchant(): Response
     {
-        $response = $this->networkClient->post("/v3/info/merchant", $this->buildRequestOptions([
+        $response = $this->networkClient->post("/api/v3/info/merchant", $this->buildRequestOptions([
             RequestOptions::JSON => $this->merchantData,
             RequestOptions::HEADERS => [
                 'Authorization' => 'Bearer ' . $this->publicKey,

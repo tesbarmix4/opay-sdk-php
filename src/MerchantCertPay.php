@@ -223,7 +223,7 @@ class MerchantCertPay extends Merchant
     public function status(): Response
     {
         $_signature = hash_hmac('sha512', json_encode($this->statusData), $this->privateKey);
-        $response = $this->networkClient->post("/v3/certpay/status", $this->buildRequestOptions([
+        $response = $this->networkClient->post("/api/v3/certpay/status", $this->buildRequestOptions([
             RequestOptions::JSON => $this->statusData,
             RequestOptions::HEADERS => [
                 'Authorization' => 'Bearer ' . $_signature,
@@ -236,7 +236,7 @@ class MerchantCertPay extends Merchant
     public function close(): Response
     {
         $_signature = hash_hmac('sha512', json_encode($this->closeData), $this->privateKey);
-        $response = $this->networkClient->post("/v3/certpay/close", $this->buildRequestOptions([
+        $response = $this->networkClient->post("/api/v3/certpay/close", $this->buildRequestOptions([
             RequestOptions::JSON => $this->closeData,
             RequestOptions::HEADERS => [
                 'Authorization' => 'Bearer ' . $_signature,
@@ -250,7 +250,7 @@ class MerchantCertPay extends Merchant
     public function refund(): Response
     {
         $_signature = hash_hmac('sha512', json_encode($this->refundData), $this->privateKey);
-        $response = $this->networkClient->post("/v3/certpay/refund", $this->buildRequestOptions([
+        $response = $this->networkClient->post("/api/v3/certpay/refund", $this->buildRequestOptions([
             RequestOptions::JSON => $this->refundData,
             RequestOptions::HEADERS => [
                 'Authorization' => 'Bearer ' . $_signature,
@@ -264,7 +264,7 @@ class MerchantCertPay extends Merchant
     public function refundStatus(): Response
     {
         $_signature = hash_hmac('sha512', json_encode($this->refundStatusData), $this->privateKey);
-        $response = $this->networkClient->post("/v3/certpay/refundStatus", $this->buildRequestOptions([
+        $response = $this->networkClient->post("/api/v3/certpay/refundStatus", $this->buildRequestOptions([
             RequestOptions::JSON => $this->refundStatusData,
             RequestOptions::HEADERS => [
                 'Authorization' => 'Bearer ' . $_signature,

@@ -43,7 +43,7 @@ class MerchantCharge extends Merchant
     public function status(): Response
     {
         $_signature = hash_hmac('sha512', json_encode($this->chargeStatusData), $this->privateKey);
-        $response = $this->networkClient->post("/v3/charge/status", $this->buildRequestOptions([
+        $response = $this->networkClient->post("/api/v3/charge/status", $this->buildRequestOptions([
             RequestOptions::JSON => $this->chargeStatusData,
             RequestOptions::HEADERS => [
                 'Authorization' => 'Bearer ' . $_signature,
