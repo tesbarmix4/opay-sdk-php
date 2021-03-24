@@ -4,6 +4,9 @@
 namespace Opay\Result;
 
 
+use ReflectionObject;
+use stdClass;
+
 abstract class Response
 {
     public $code;
@@ -11,15 +14,15 @@ abstract class Response
     public $data;
 
     /**
-     * @param \stdClass|null $s
+     * @param stdClass|null $s
      * @return mixed
      */
-    abstract static function parseData(?\stdClass $s);
+    abstract static function parseData(?stdClass $s);
     public abstract function getData();
 
-    public static function cast(Response $destination, \stdClass $source) : Response
+    public static function cast(Response $destination, stdClass $source) : Response
     {
-        $sourceReflection = new \ReflectionObject($source);
+        $sourceReflection = new ReflectionObject($source);
         $sourceProperties = $sourceReflection->getProperties();
         foreach ($sourceProperties as $sourceProperty) {
             $name = $sourceProperty->getName();

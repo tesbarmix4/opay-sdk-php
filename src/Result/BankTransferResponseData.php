@@ -16,7 +16,7 @@ class BankTransferResponseData
     private $bankCode;
     private $bankAccountNumber;
 
-    public static function cast(BankTransferResponseData $destination, ?\stdClass $source) : BankTransferResponseData
+    public static function cast(BankTransferResponseData $destination, ?\stdClass $source): BankTransferResponseData
     {
         if ($source) {
             $sourceReflection = new \ReflectionObject($source);
@@ -29,8 +29,9 @@ class BankTransferResponseData
         return $destination;
     }
 
-    public function toArray() : array {
-        return (array) $this;
+    public function toArray(): array
+    {
+        return (array)$this;
     }
 
     /**

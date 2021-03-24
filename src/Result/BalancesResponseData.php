@@ -4,12 +4,19 @@
 namespace Opay\Result;
 
 
-class BanksResponseData
-{
-    public $name;
-    public $code;
+use stdClass;
 
-    public static function cast(BanksResponseData $destination, ?\stdClass $source): BanksResponseData
+class BalancesResponseData
+{
+    private $value;
+    private $currency;
+
+    /**
+     * @param BalancesResponseData $destination
+     * @param stdClass|null $source
+     * @return BalancesResponseData
+     */
+    public static function cast(BalancesResponseData $destination, ?stdClass $source): BalancesResponseData
     {
         if ($source) {
             $sourceReflection = new \ReflectionObject($source);
@@ -30,16 +37,18 @@ class BanksResponseData
     /**
      * @return mixed
      */
-    public function getName()
+    public function getValue()
     {
-        return $this->name;
+        return $this->value;
     }
 
     /**
      * @return mixed
      */
-    public function getCode()
+    public function getCurrency()
     {
-        return $this->code;
+        return $this->currency;
     }
+
+
 }

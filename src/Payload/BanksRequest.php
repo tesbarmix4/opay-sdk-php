@@ -13,10 +13,10 @@ class BanksRequest implements \JsonSerializable
         $this->countryCode = $countryCode;
     }
 
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
         return [
-            'countryCode'=> $this->countryCode
+            'countryCode' => $this->countryCode
         ];
     }
 }

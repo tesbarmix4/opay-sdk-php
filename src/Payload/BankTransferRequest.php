@@ -30,19 +30,19 @@ class BankTransferRequest implements \JsonSerializable
         $this->reason = $reason;
     }
 
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
         return [
-            'amount'=> (string)$this->amount,
-            'country'=> $this->country,
-            'currency'=> $this->currency,
-            'reason'=> $this->reason,
-            'receiver'=> [
-                'bankAccountNumber'=> $this->receiverBankAccountNumber,
-                'bankCode'=> $this->receiverBankCode,
-                'name'=> $this->receiverName
+            'amount' => (string)$this->amount,
+            'country' => $this->country,
+            'currency' => $this->currency,
+            'reason' => $this->reason,
+            'receiver' => [
+                'bankAccountNumber' => $this->receiverBankAccountNumber,
+                'bankCode' => $this->receiverBankCode,
+                'name' => $this->receiverName
             ],
-            'reference'=> $this->reference
+            'reference' => $this->reference
         ];
     }
 }

@@ -6,7 +6,7 @@ namespace Opay\Result;
 
 class BankTransferResponse extends Response
 {
-    static function parseData(?\stdClass $s)
+    static function parseData(?\stdClass $s): BankTransferResponseData
     {
         return BankTransferResponseData::cast(new BankTransferResponseData(), $s);
     }
@@ -14,7 +14,7 @@ class BankTransferResponse extends Response
     /**
      * @return BankTransferResponseData
      */
-    public function getData() : BankTransferResponseData
+    public function getData(): BankTransferResponseData
     {
         return $this->data;
     }

@@ -20,14 +20,16 @@ class MerchantCashierTest extends TestCase
             "http://xxxxxxxxxxxxxxx.com",
             "xxxxxxxxxxxxxxxx",
             "xxxxxxxxxxxxx",
-            "XXXXXXXXXXXXX");
+            "XXXXXXXXXXXXX"
+        );
+
     }
 
     /**
      *
      * @return Response
      */
-    public final function testOrderPayload() : Response
+    public final function testOrderPayload(): Response
     {
         $_orderRequest = new OrderRequest([OpayConstants::PAYMENT_CHANNEL_BALANCE_PAYMENT, OpayConstants::PAYMENT_CHANNEL_BONUS_PAYMENT], "test_201966864458800",
             "WOW. The best wireless earphone in history. Cannot agree more! Right!", [OpayConstants::PAYMENT_METHODS_ACCOUNT, OpayConstants::PAYMENT_METHODS_QRCODE], OpayConstants::CURRENCY_NAIRA,
@@ -40,17 +42,17 @@ class MerchantCashierTest extends TestCase
 //        $response = $this->merchantCashier->getOrderApiResult();
 //        var_dump($response->getData());
         return OrderResponse::cast(new OrderResponse(), (object)[
-            'code'=> '00000',
-            'message'=> 'SUCCESSFUL',
-            'data'=> (object)[
-                'orderNo'=> '191206140094566448',//$response->getData()['orderNo'],
-                'reference'=> $_orderRequest->getReference(),
-                'cashierUrl'=> 'http://xxxxxxxxxxxx/api/cashierHome?data=7krxXPg4Ob%2B',
-                'payAmount'=> [
-                    'currency'=> "NGN",
-                    'value'=> '10'
+            'code' => '00000',
+            'message' => 'SUCCESSFUL',
+            'data' => (object)[
+                'orderNo' => '191206140094566448',//$response->getData()['orderNo'],
+                'reference' => $_orderRequest->getReference(),
+                'cashierUrl' => 'http://xxxxxxxxxxxx/api/cashierHome?data=7krxXPg4Ob%2B',
+                'payAmount' => [
+                    'currency' => "NGN",
+                    'value' => '10'
                 ],
-                'orderStatus'=> 'INITIAL/PENDING/SUCCESS/FAIL'
+                'orderStatus' => 'INITIAL/PENDING/SUCCESS/FAIL'
             ]
         ]);
     }
@@ -61,7 +63,7 @@ class MerchantCashierTest extends TestCase
      * @param OrderResponse $orderResponse
      * @return void
      */
-    public final function testOrderStatusPayload(OrderResponse $orderResponse) : void
+    public final function testOrderStatusPayload(OrderResponse $orderResponse): void
     {
         $orderData = $orderResponse->getData()->toArray();
         $this->assertIsArray($orderData);
@@ -80,7 +82,7 @@ class MerchantCashierTest extends TestCase
      * return void
      * @param OrderResponse $orderResponse
      */
-    public final function testOrderClosePayload(OrderResponse $orderResponse) : void
+    public final function testOrderClosePayload(OrderResponse $orderResponse): void
     {
         $orderData = $orderResponse->getData()->toArray();
         $this->assertIsArray($orderData);
