@@ -39,16 +39,44 @@ Access sample codes & implementations right inside the `http_example` folder
 
 ##### Transfer
 ###### Bank
-- get supported countries: [http_example/transfer/bank/get_countries.php](http_example/transfer/bank/get_countries.php)
-- get supported banks: [http_example/transfer/bank/get_banks.php](http_example/transfer/bank/get_banks.php)
+- Get supported countries: [http_example/transfer/bank/get_countries.php](http_example/transfer/bank/get_countries.php)
+- Get supported banks: [http_example/transfer/bank/get_banks.php](http_example/transfer/bank/get_banks.php)
 - validate a bank account: [http_example/transfer/bank/validate_account.php](http_example/transfer/bank/validate_account.php)
-- initiate transfer: [http_example/transfer/bank/initiate.php](http_example/transfer/bank/initiate.php)
+- Initiate transfer: [http_example/transfer/bank/initiate.php](http_example/transfer/bank/initiate.php)
 - status query: [http_example/transfer/bank/order_status.php](http_example/transfer/bank/order_status.php)
 
 ###### Opay Wallet
 - validate a user/customer: [http_example/transfer/wallet/validate_user.php](http_example/transfer/wallet/validate_user.php)
 - validate a merchant: [http_example/transfer/wallet/validate_merchant.php](http_example/transfer/wallet/validate_merchant.php)
-- initiate transfer: [http_example/transfer/wallet/initiate.php](http_example/transfer/wallet/initiate.php)
+- Initiate transfer: [http_example/transfer/wallet/initiate.php](http_example/transfer/wallet/initiate.php)
 - status query: [http_example/transfer/wallet/order_status.php](http_example/transfer/wallet/order_status.php)
+
+##### Charge
+- Initialize a charge transaction: [http_example/charge/initialize.php](http_example/charge/initialize.php)
+- Enquiry a charge transaction's status: [http_example/charge/status.php](http_example/charge/status.php)
+
+##### Balances
+- Query your all accounts' balances : [http_example/balances/balances.php](http_example/balances/balances.php)
+
+##### Transaction
+- Initialize a transaction : [http_example/transaction/initialize.php](http_example/transaction/initialize.php)
+- Submit OTP to complete transaction : [http_example/transaction/input-otp.php](http_example/transaction/input-otp.php)
+- Submit phone when requested to complete transaction : [http_example/transaction/input-phone.php](http_example/transaction/input-phone.php)
+- Submit pin when requested to complete transaction : [http_example/transaction/input-pin.php](http_example/transaction/input-pin.php)
+- Submit dob when requested to complete transaction : [http_example/transaction/input-dob.php](http_example/transaction/input-dob.php)
+- Get transaction status : [http_example/transaction/status.php](http_example/transaction/status.php)
+- Get support bank code before requested to commit transaction pay by bankaccount : [http_example/transaction/banks.php](http_example/transaction/status.php)
+- Initialize a bankTransfer transaction : [http_example/transaction/bank_transfer/initialize.php](http_example/transaction/bank_transfer/initialize.php)
+- Query a bankTransfer transaction's status : [http_example/transaction/bank_transfer/status.php](http_example/transaction/bank_transfer/status.php)
+- Initialize a ussd transaction : [http_example/transaction/ussd/initialize.php](http_example/transaction/ussd/initialize.php)
+- Query a ussd transaction's status : [http_example/transaction/ussd/status.php](http_example/transaction/ussd/status.php)
+
+##### Betting/Airtime Topup
+- betting-providers : [http_example/bills/betting-providers.php](http_example/bills/betting-providers.php)
+- Validate the customerId in specific provider : [http_example/bills/validate.php](http_example/bills/validate.php)
+- Initiate a betting/airtime topup transaction : [http_example/bills/bulk-bills.php](http_example/bills/bulk-bills.php)
+- Initialize a betting topup transaction status inquiry : [http_example/bills/bulk-status.php](http_example/bills/bulk-status.php)
+
+
 
 ##### Need Help? Feel free to open an issue.
