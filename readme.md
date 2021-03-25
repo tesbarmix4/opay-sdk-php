@@ -15,7 +15,7 @@ $ composer require opay/merchant-cashier-php
 ```
 
 #### Setup:
-You need the library initialized as follows: (example in [http_example/init.php](http_example/init.php) file)
+You need the library initialized as follows: (example in [http_example/init.php](http_example/Initialize.php) file)
 ```php
 use Opay\MerchantCashier;
 use Opay\MerchantTransfer;
@@ -32,23 +32,23 @@ $merchantTransfer = new MerchantTransfer("environment-endpoint-url", "Public_Key
 Access sample codes & implementations right inside the `http_example` folder
 
 ##### Accept Payment
-- initiate: [http_example/accept_payment/order.php](http_example/accept_payment/order.php)
-- status query: [http_example/accept_payment/order_status.php](http_example/accept_payment/order_status.php)
-- cancel payment: [http_example/accept_payment/order_cancel.php](http_example/accept_payment/order_cancel.php)
-- handling payment callback: [http_example/accept_payment/callback.php](http_example/accept_payment/callback.php)
+- initiate: [http_example/accept_payment/order.php](http_example/cashier/order.php)
+- status query: [http_example/accept_payment/order_status.php](http_example/cashier/order_status.php)
+- cancel payment: [http_example/accept_payment/order_cancel.php](http_example/cashier/order_cancel.php)
+- handling payment callback: [http_example/accept_payment/callback.php](http_example/cashier/callback.php)
 
 ##### Transfer
 ###### Bank
 - Get supported countries: [http_example/transfer/bank/get_countries.php](http_example/transfer/bank/get_countries.php)
 - Get supported banks: [http_example/transfer/bank/get_banks.php](http_example/transfer/bank/get_banks.php)
 - validate a bank account: [http_example/transfer/bank/validate_account.php](http_example/transfer/bank/validate_account.php)
-- Initiate transfer: [http_example/transfer/bank/initiate.php](http_example/transfer/bank/initiate.php)
+- Initiate transfer: [http_example/transfer/bank/initiate.php](http_example/transfer/bank/transfer-to-bank.php)
 - status query: [http_example/transfer/bank/order_status.php](http_example/transfer/bank/order_status.php)
 
 ###### Opay Wallet
 - validate a user/customer: [http_example/transfer/wallet/validate_user.php](http_example/transfer/wallet/validate_user.php)
 - validate a merchant: [http_example/transfer/wallet/validate_merchant.php](http_example/transfer/wallet/validate_merchant.php)
-- Initiate transfer: [http_example/transfer/wallet/initiate.php](http_example/transfer/wallet/initiate.php)
+- Initiate transfer: [http_example/transfer/wallet/initiate.php](http_example/transfer/wallet/TransferToWallet.php)
 - status query: [http_example/transfer/wallet/order_status.php](http_example/transfer/wallet/order_status.php)
 
 ##### Charge

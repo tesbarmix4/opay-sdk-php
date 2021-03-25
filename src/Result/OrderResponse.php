@@ -5,7 +5,7 @@ namespace Opay\Result;
 class OrderResponse extends Response
 {
 
-    static function parseData(?\stdClass $s)
+    static function parseData(?\stdClass $s): OrderResponseData
     {
         return OrderResponseData::cast(new OrderResponseData(), $s);
     }

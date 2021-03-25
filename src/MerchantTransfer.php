@@ -7,6 +7,8 @@ namespace Opay;
 use GuzzleHttp\RequestOptions;
 use Opay\Payload\BanksRequest;
 use Opay\Payload\BankTransferRequest;
+use Opay\Payload\OpayTransferBatchToBankRequest;
+use Opay\Payload\OpayTransferBatchToWalletRequest;
 use Opay\Payload\OpayTransferRequest;
 use Opay\Payload\OrderStatusRequest;
 use Opay\Payload\ValidateBankAccountRequest;
@@ -17,6 +19,8 @@ use Opay\Result\BankTransferResponse;
 use Opay\Result\CountriesResponse;
 use Opay\Result\OpayTransferResponse;
 use Opay\Result\Response;
+use Opay\Result\TransferBatchToBankResponse;
+use Opay\Result\TransferBatchToWalletResponse;
 use Opay\Result\ValidateBankAccountResponse;
 use Opay\Result\ValidateOpayMerchantResponse;
 use Opay\Result\ValidateOpayUserResponse;
@@ -30,6 +34,8 @@ class MerchantTransfer extends Merchant
     private $validateOpayMerchantData;
     private $validateOpayUserData;
     private $opayTransferData;
+    private $opayBatchToWalletTransferData;
+    private $opayBatchToBankTransferData;
 
     /**
      * MerchantTransfer constructor.
@@ -40,149 +46,199 @@ class MerchantTransfer extends Merchant
      * @param array|null $proxyAddress
      */
     public function __construct(string $environmentBaseUrl, string $pbKey, string $pvKey,
-                                string $merchantId, ?array $proxyAddress = null) {
+                                string $merchantId, ?array $proxyAddress = null)
+    {
         parent::__construct($environmentBaseUrl, $pbKey, $pvKey, $merchantId, $proxyAddress);
     }
 
-    public final function getCountries() : void {}
+    public final function getCountries(): void
+    {
+    }
 
-    public final function getBanks(BanksRequest $bank) : void {
+    public final function getBanks(BanksRequest $bank): void
+    {
         $this->banksData = $bank;
     }
 
-    public final function validateAccount(ValidateBankAccountRequest $validateBankAccount) : void {
+    public final function validateAccount(ValidateBankAccountRequest $validateBankAccount): void
+    {
         $this->validateBankAccountData = $validateBankAccount;
     }
 
-    public final function bankTransfer(BankTransferRequest $bankTransfer) : void {
+    public final function bankTransfer(BankTransferRequest $bankTransfer): void
+    {
         $this->bankTransferData = $bankTransfer;
     }
 
-    public final function transferStatus(OrderStatusRequest $orderStatus) : void {
+    public final function transferStatus(OrderStatusRequest $orderStatus): void
+    {
         $this->orderStatusData = $orderStatus;
     }
 
-    public final function validateOpayMerchant(ValidateOpayMerchantRequest $validateOpayMerchant) : void {
+    public final function validateOpayMerchant(ValidateOpayMerchantRequest $validateOpayMerchant): void
+    {
         $this->validateOpayMerchantData = $validateOpayMerchant;
     }
 
-    public final function validateOpayUser(ValidateOpayUserRequest $validateOpayUser) : void {
+    public final function validateOpayUser(ValidateOpayUserRequest $validateOpayUser): void
+    {
         $this->validateOpayUserData = $validateOpayUser;
     }
 
-    public final function opayTransfer(OpayTransferRequest $opayTransfer) : void {
+    public final function opayTransfer(OpayTransferRequest $opayTransfer): void
+    {
         $this->opayTransferData = $opayTransfer;
     }
 
-    public final function getCountriesApiResult() : Response
+    public function opayBatchToWalletTransfer(OpayTransferBatchToWalletRequest $request) : void
+    {
+        $this->opayBatchToWalletTransferData = $request;
+    }
+
+    public function opayBatchToBankTransfer(OpayTransferBatchToBankRequest $request)
+    {
+        $this->opayBatchToBankTransferData = $request;
+    }
+
+
+    public final function getCountriesApiResult(): Response
     {
         $response = $this->networkClient->post("/api/v3/countries", $this->buildRequestOptions([
-            RequestOptions::HEADERS=> [
-                'Authorization'=> 'Bearer '.$this->publicKey,
-                'MerchantId'=> $this->merchantId
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $this->publicKey,
+                'MerchantId' => $this->merchantId
             ]
         ]));
         return CountriesResponse::cast(new CountriesResponse(), json_decode($response->getBody()->getContents(), false));
     }
 
-    public final function getBanksApiResult() : Response
+    public final function getBanksApiResult(): Response
     {
         $response = $this->networkClient->post("/api/v3/banks", $this->buildRequestOptions([
-            RequestOptions::JSON=> $this->banksData,
-            RequestOptions::HEADERS=> [
-                'Authorization'=> 'Bearer '.$this->publicKey,
-                'MerchantId'=> $this->merchantId
+            RequestOptions::JSON => $this->banksData,
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $this->publicKey,
+                'MerchantId' => $this->merchantId
             ]
         ]));
         return BanksResponse::cast(new BanksResponse(), json_decode($response->getBody()->getContents(), false));
     }
 
-    public final function bankTransferApiResult() : Response
+    public final function bankTransferApiResult(): Response
     {
         $requestString = json_encode($this->bankTransferData);
         $_signature = hash_hmac('sha512', $requestString, $this->privateKey);
         dump($requestString);
         $response = $this->networkClient->post("/api/v3/transfer/toBank", $this->buildRequestOptions([
-            RequestOptions::JSON=> json_decode($requestString, true),
-            RequestOptions::HEADERS=> [
-                'Authorization'=> 'Bearer '.$_signature,
-                'MerchantId'=> $this->merchantId
+            RequestOptions::JSON => json_decode($requestString, true),
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $_signature,
+                'MerchantId' => $this->merchantId
             ]
         ]));
         return BankTransferResponse::cast(new BankTransferResponse(), json_decode($response->getBody()->getContents(), false));
     }
 
-    public final function bankTransferStatusApiResult() : Response
+    public final function batchToBankApiResult(): Response
+    {
+        $requestString = json_encode($this->opayBatchToBankTransferData);
+        $_signature = hash_hmac('sha512', $requestString, $this->privateKey);
+        dump($requestString);
+        $response = $this->networkClient->post("/api/v3/transfer/batchToBank", $this->buildRequestOptions([
+            RequestOptions::JSON => json_decode($requestString, true),
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $_signature,
+                'MerchantId' => $this->merchantId
+            ]
+        ]));
+        return TransferBatchToBankResponse::cast(new TransferBatchToBankResponse(), json_decode($response->getBody()->getContents(), false));
+    }
+
+    public final function bankTransferStatusApiResult(): Response
     {
         $_signature = hash_hmac('sha512', json_encode($this->orderStatusData), $this->privateKey);
         $response = $this->networkClient->post("/api/v3/transfer/status/toBank", $this->buildRequestOptions([
-            RequestOptions::JSON=> $this->orderStatusData,
-            RequestOptions::HEADERS=> [
-                'Authorization'=> 'Bearer '.$_signature,
-                'MerchantId'=> $this->merchantId
+            RequestOptions::JSON => $this->orderStatusData,
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $_signature,
+                'MerchantId' => $this->merchantId
             ]
         ]));
         return BankTransferResponse::cast(new BankTransferResponse(), json_decode($response->getBody()->getContents(), false));
     }
 
-    public final function validateBankAccountApiResult() : Response
+    public final function validateBankAccountApiResult(): Response
     {
         $response = $this->networkClient->post("/api/v3/verification/accountNumber/resolve", $this->buildRequestOptions([
-            RequestOptions::JSON=> $this->validateBankAccountData,
-            RequestOptions::HEADERS=> [
-                'Authorization'=> 'Bearer '.$this->publicKey,
-                'MerchantId'=> $this->merchantId
+            RequestOptions::JSON => $this->validateBankAccountData,
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $this->publicKey,
+                'MerchantId' => $this->merchantId
             ]
         ]));
         return ValidateBankAccountResponse::cast(new ValidateBankAccountResponse(), json_decode($response->getBody()->getContents(), false));
     }
 
-    public final function validateOpayMerchantApiResult() : Response
+    public final function validateOpayMerchantApiResult(): Response
     {
         $response = $this->networkClient->post("/api/v3/info/merchant", $this->buildRequestOptions([
-            RequestOptions::JSON=> $this->validateOpayMerchantData,
-            RequestOptions::HEADERS=> [
-                'Authorization'=> 'Bearer '.$this->publicKey,
-                'MerchantId'=> $this->merchantId
+            RequestOptions::JSON => $this->validateOpayMerchantData,
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $this->publicKey,
+                'MerchantId' => $this->merchantId
             ]
         ]));
         return ValidateOpayMerchantResponse::cast(new ValidateOpayMerchantResponse(), json_decode($response->getBody()->getContents(), false));
     }
 
-    public final function validateOpayUserApiResult() : Response
+    public final function validateOpayUserApiResult(): Response
     {
         $response = $this->networkClient->post("/api/v3/info/user", $this->buildRequestOptions([
-            RequestOptions::JSON=> $this->validateOpayUserData,
-            RequestOptions::HEADERS=> [
-                'Authorization'=> 'Bearer '.$this->publicKey,
-                'MerchantId'=> $this->merchantId
+            RequestOptions::JSON => $this->validateOpayUserData,
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $this->publicKey,
+                'MerchantId' => $this->merchantId
             ]
         ]));
         return ValidateOpayUserResponse::cast(new ValidateOpayUserResponse(), json_decode($response->getBody()->getContents(), false));
     }
 
-    public final function opayTransferApiResult() : Response
+    public final function opayTransferApiResult(): Response
     {
         $requestString = json_encode($this->opayTransferData);
         $_signature = hash_hmac('sha512', $requestString, $this->privateKey);
         $response = $this->networkClient->post("/api/v3/transfer/toWallet", $this->buildRequestOptions([
-            RequestOptions::JSON=> json_decode($requestString, true),
-            RequestOptions::HEADERS=> [
-                'Authorization'=> 'Bearer '.$_signature,
-                'MerchantId'=> $this->merchantId
+            RequestOptions::JSON => json_decode($requestString, true),
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $_signature,
+                'MerchantId' => $this->merchantId
             ]
         ]));
         return OpayTransferResponse::cast(new OpayTransferResponse(), json_decode($response->getBody()->getContents(), false));
     }
 
-    public final function opayTransferStatusApiResult() : Response
+    public final function batchToWalletApiResult(): Response
+    {
+        $requestString = json_encode($this->opayBatchToWalletTransferData);
+        $_signature = hash_hmac('sha512', $requestString, $this->privateKey);
+        $response = $this->networkClient->post("/api/v3/transfer/batchToWallet", $this->buildRequestOptions([
+            RequestOptions::JSON => json_decode($requestString, true),
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $_signature,
+                'MerchantId' => $this->merchantId
+            ]
+        ]));
+        return TransferBatchToWalletResponse::cast(new TransferBatchToWalletResponse(), json_decode($response->getBody()->getContents(), false));
+    }
+
+    public final function opayTransferStatusApiResult(): Response
     {
         $_signature = hash_hmac('sha512', json_encode($this->orderStatusData), $this->privateKey);
         $response = $this->networkClient->post("/api/v3/transfer/status/toWallet", $this->buildRequestOptions([
-            RequestOptions::JSON=> $this->orderStatusData,
-            RequestOptions::HEADERS=> [
-                'Authorization'=> 'Bearer '.$_signature,
-                'MerchantId'=> $this->merchantId
+            RequestOptions::JSON => $this->orderStatusData,
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $_signature,
+                'MerchantId' => $this->merchantId
             ]
         ]));
         return OpayTransferResponse::cast(new OpayTransferResponse(), json_decode($response->getBody()->getContents(), false));

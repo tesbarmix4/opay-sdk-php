@@ -75,9 +75,9 @@ class BillsBulkBillsRequest implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'serviceType' => $this->serviceType,
+            'bulkData' => $this->bulkData,
             'callBackUrl' => $this->callBackUrl,
-            'customerId' => $this->bulkData
+            'serviceType' => $this->serviceType
         ];
     }
 }

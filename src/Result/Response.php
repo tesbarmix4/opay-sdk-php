@@ -18,9 +18,10 @@ abstract class Response
      * @return mixed
      */
     abstract static function parseData(?stdClass $s);
+
     public abstract function getData();
 
-    public static function cast(Response $destination, stdClass $source) : Response
+    public static function cast(Response $destination, stdClass $source): Response
     {
         $sourceReflection = new ReflectionObject($source);
         $sourceProperties = $sourceReflection->getProperties();
@@ -28,12 +29,14 @@ abstract class Response
             $name = $sourceProperty->getName();
             if ($name === 'data') {
                 if (is_array($source->$name)) {
-                    $arrIn = (array) $source->$name;
+                    $arrIn = (array)$source->$name;
                     $arrOut = array();
                     foreach ($arrIn as $value) {
                         $arrOut[] = static::parseData($value);
                     }
                     $destination->{$name} = $arrOut;
+                } else if (is_bool($source->$name)) {
+                    $destination->{$name} = $source->$name;
                 } else {
                     $destination->{$name} = static::parseData($source->$name);
                 }
@@ -44,8 +47,9 @@ abstract class Response
         return $destination;
     }
 
-    public function toArray() : array {
-        return (array) $this;
+    public function toArray(): array
+    {
+        return (array)$this;
     }
 
     /**

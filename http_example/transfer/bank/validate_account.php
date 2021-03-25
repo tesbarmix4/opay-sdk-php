@@ -1,7 +1,7 @@
 <?php
 use Opay\Payload\ValidateBankAccountRequest;
 
-require_once('../../init.php');
+require_once('../../Initialize.php');
 
 $validateBankAccountRequest = new ValidateBankAccountRequest('NG', '108', '45345343434');
 $merchantTransfer->validateAccount($validateBankAccountRequest);

@@ -48,14 +48,6 @@ class OrderRequest implements \JsonSerializable
     }
 
     /**
-     * @return string
-     */
-    public function getReference(): string
-    {
-        return $this->reference;
-    }
-
-    /**
      * Specify data which should be serialized to JSON
      * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
      * @return mixed data which can be serialized by <b>json_encode</b>,
@@ -100,6 +92,22 @@ class OrderRequest implements \JsonSerializable
     /**
      * @return string
      */
+    public function getReference(): string
+    {
+        return $this->reference;
+    }
+
+    /**
+     * @param string $reference
+     */
+    public function setReference(string $reference): void
+    {
+        $this->reference = $reference;
+    }
+
+    /**
+     * @return string
+     */
     public function getProductDesc(): string
     {
         return $this->productDesc;
@@ -130,19 +138,35 @@ class OrderRequest implements \JsonSerializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getAmount()
+    public function getAmount(): string
     {
         return $this->amount;
     }
 
     /**
-     * @param mixed $payAmount
+     * @param string $amount
      */
-    public function setAmount(string $payAmount): void
+    public function setAmount(string $amount): void
     {
-        $this->amount = $payAmount;
+        $this->amount = $amount;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrency(): string
+    {
+        return $this->currency;
+    }
+
+    /**
+     * @param string $currency
+     */
+    public function setCurrency(string $currency): void
+    {
+        $this->currency = $currency;
     }
 
     /**
@@ -257,20 +281,5 @@ class OrderRequest implements \JsonSerializable
         $this->expireAt = $expireAt;
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrency(): string
-    {
-        return $this->currency;
-    }
-
-    /**
-     * @param string $currency
-     */
-    public function setCurrency(string $currency): void
-    {
-        $this->currency = $currency;
-    }
 
 }

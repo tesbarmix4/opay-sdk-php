@@ -140,9 +140,15 @@ class BulkBillsData
     }
 
 
-
     public function toArray(): array
     {
-        return (array)$this;
+        return [
+            'amount' => $this->amount,
+            'country' => $this->country,
+            'currency' => $this->currency,
+            'customerId' => $this->customerId,
+            'provider' => $this->provider,
+            'reference' => $this->reference
+        ];
     }
 }

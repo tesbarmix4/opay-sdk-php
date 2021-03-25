@@ -12,7 +12,7 @@ class TransactionStatusResponse extends Response
         return TransactionStatusResponseData::cast(new TransactionStatusResponseData, $s);
     }
 
-    public function getData(): TransactionInputPinResponseData
+    public function getData(): TransactionStatusResponseData
     {
         return $this->data;
     }

@@ -51,9 +51,11 @@ class BulkStatusData
     }
 
 
-
     public function toArray(): array
     {
-        return (array)$this;
+        return [
+            'orderNo' => $this->orderNo,
+            'reference' => $this->reference
+        ];
     }
 }
