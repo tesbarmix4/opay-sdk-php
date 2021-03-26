@@ -55,8 +55,8 @@ class ChargeStatusRequest implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'reference' => $this->reference,
-            'orderNo' => $this->orderNo
+            'orderNo' => $this->orderNo,
+            'reference' => $this->reference
         ];
     }
 }
