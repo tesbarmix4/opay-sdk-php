@@ -4,11 +4,11 @@ include_once 'ConfigInterface.php';
 
 class Config implements ConfigInterface
 {
-    private $hostBaseUrl = "http://localhost/opay-sdk-php/http_example";
+    private $hostBaseUrl = "http://xxx.com/http_example";
     private $endpointBaseUrl = 'http://sandbox-cashierapi.opayweb.com';
-    private $pubKey = 'OPAYPUB16058646510220.420473668870203';
-    private $prvKey = 'OPAYPRV16058646510230.34019403186305675';
-    private $merchantId = '256620112018025';
+    private $pubKey = 'OPAYPUBxxxxxxxxxxxxx.xxxxxxxxxxxxx';
+    private $prvKey = 'OPAYPRVxxxxxxxxxxxxx.xxxxxxxxxxxxx';
+    private $merchantId = '256620xxxxxxxxxxxxx';
 
     /**
      * @return string
