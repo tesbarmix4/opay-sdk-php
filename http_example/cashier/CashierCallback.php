@@ -3,12 +3,15 @@
 use Opay\MerchantCashier;
 use Opay\Payload\OrderStatusRequest;
 use Opay\Result\Response;
+use Opay\Tool\Helper;
 
 require_once('../Initialize.php');
 require_once('../Config.php');
 
 class CashierCallback extends Initialize
 {
+    use Helper;
+
     private $merchantCashier;
 
     public function __construct()
@@ -22,9 +25,10 @@ class CashierCallback extends Initialize
         $inputJSON = file_get_contents('php://input');
         $input = json_decode($inputJSON, TRUE); //convert JSON into array
         $payload = $input['payload'];
+        $sign = $this->checkCallbackSignature($input, $this->config->getPrvKey());
+        dump($sign);
         $this->setOrderNumber($payload['transactionId']);
         $this->setReference($payload['reference']);
-        dump($payload);
         return $this->getStatus();
     }
 
@@ -39,29 +43,30 @@ class CashierCallback extends Initialize
 $obj = new CashierCallback();
 $response = $obj->getContent();
 dump($response);
-
-// Example of data posted in callback
-// {
-//     "payload": {
-//         "country": "NG",
-//         "instrumentId": "useless",
-//         "fee": "0.00",
-//         "channel": "Web",
-//         "reference": "test_20196699559858800",
-//         "updated_at": "2019-12-13T09:36:58Z",
-//         "currency": "NGN",
-//         "refunded": false,
-//         "instrument-id": "useless",
-//         "timestamp": "2019-12-13T09:36:58Z",
-//         "amount": "0.10",
-//         "instrumentType": "coins",
-//         "instrument_id": "useless",
-//         "transactionId": "191213140104849949",
-//         "token": "191213140104849949",
-//         "bussinessType": "Consumption_H5",
-//         "payChannel": "BalancePayment",
-//         "status": "failed"
-//     },
-//     "sha512": "9cc847600cb7104b0a5a48976e70cf74763eb69f123a282975de1c3a751128c12d437b1f7c7d4a24bdb82b79aaa477e98e81bc66be8e8d8c3c15cdfcea730553",
-//     "type": "transaction-status"
-// }
+/*
+    {
+        "payload":{
+        "country":"NG",
+            "instrumentId":"useless",
+            "fee":"0.10",
+            "channel":"Web",
+            "displayedFailure":"",
+            "reference":"3cae64cb5f68a7c4008b765b97401a",
+            "updated_at":"2020-09-21T13:18:45Z",
+            "currency":"NGN",
+            "refunded":false,
+            "instrument-id":"useless",
+            "timestamp":"2020-09-21T13:18:45Z",
+            "amount":"10.00",
+            "instrumentType":"coins",
+            "instrument_id":"useless",
+            "transactionId":"200921144008250432",
+            "token":"200921144008250432",
+            "bussinessType":"Consumption_H5",
+            "payChannel":"BalancePayment",
+            "status":"successful"
+        },
+        "sha512":"d34fc7b433b226a591c261c0ef10b76e60cebfc07f27840b4e6640132b82e76d0cc7eba585fafc59e37355129c57a7b54b07ac2bc64296f40c3e987199684f62",
+        "type":"transaction-status"
+    }
+*/

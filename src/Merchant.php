@@ -17,17 +17,19 @@ class Merchant
     protected $privateKey;
 
     public function __construct(string $environmentBaseUrl, string $pbKey, string $pvKey,
-                                string $merchantId, ?array $proxyAddress = null) {
+                                string $merchantId, ?array $proxyAddress = null)
+    {
         $this->merchantId = $merchantId;
         $this->publicKey = $pbKey;
         $this->privateKey = $pvKey;
         $this->networkClient = new Client([
-            'base_uri'=> $environmentBaseUrl
+            'base_uri' => $environmentBaseUrl
         ]);
         $this->proxyAddress = $proxyAddress;
     }
 
-    protected function buildRequestOptions(array $options) : array {
+    protected function buildRequestOptions(array $options): array
+    {
         if ($this->proxyAddress) {
             $options[RequestOptions::PROXY] = $this->proxyAddress;
         }
