@@ -90,7 +90,7 @@ class MerchantTransfer extends Merchant
         $this->opayTransferData = $opayTransfer;
     }
 
-    public function opayBatchToWalletTransfer(OpayTransferBatchToWalletRequest $request) : void
+    public function opayBatchToWalletTransfer(OpayTransferBatchToWalletRequest $request): void
     {
         $this->opayBatchToWalletTransferData = $request;
     }
@@ -126,10 +126,9 @@ class MerchantTransfer extends Merchant
 
     public final function bankTransferApiResult(): Response
     {
-        $requestString = json_encode($this->bankTransferData);
-        $_signature = hash_hmac('sha512', $requestString, $this->privateKey);
+        $_signature = $this->signature(json_encode($this->bankTransferData), $this->privateKey);
         $response = $this->networkClient->post("/api/v3/transfer/toBank", $this->buildRequestOptions([
-            RequestOptions::JSON => json_decode($requestString, true),
+            RequestOptions::JSON => $this->bankTransferData,
             RequestOptions::HEADERS => [
                 'Authorization' => 'Bearer ' . $_signature,
                 'MerchantId' => $this->merchantId
@@ -140,10 +139,9 @@ class MerchantTransfer extends Merchant
 
     public final function batchToBankApiResult(): Response
     {
-        $requestString = json_encode($this->opayBatchToBankTransferData);
-        $_signature = hash_hmac('sha512', $requestString, $this->privateKey);
+        $_signature = $this->signature(json_encode($this->opayBatchToBankTransferData), $this->privateKey);
         $response = $this->networkClient->post("/api/v3/transfer/batchToBank", $this->buildRequestOptions([
-            RequestOptions::JSON => json_decode($requestString, true),
+            RequestOptions::JSON => $this->opayBatchToBankTransferData,
             RequestOptions::HEADERS => [
                 'Authorization' => 'Bearer ' . $_signature,
                 'MerchantId' => $this->merchantId
@@ -154,7 +152,7 @@ class MerchantTransfer extends Merchant
 
     public final function bankTransferStatusApiResult(): Response
     {
-        $_signature = hash_hmac('sha512', json_encode($this->orderStatusData), $this->privateKey);
+        $_signature = $this->signature(json_encode($this->orderStatusData), $this->privateKey);
         $response = $this->networkClient->post("/api/v3/transfer/status/toBank", $this->buildRequestOptions([
             RequestOptions::JSON => $this->orderStatusData,
             RequestOptions::HEADERS => [
@@ -203,10 +201,9 @@ class MerchantTransfer extends Merchant
 
     public final function opayTransferApiResult(): Response
     {
-        $requestString = json_encode($this->opayTransferData);
-        $_signature = hash_hmac('sha512', $requestString, $this->privateKey);
+        $_signature = $this->signature(json_encode($this->opayTransferData), $this->privateKey);
         $response = $this->networkClient->post("/api/v3/transfer/toWallet", $this->buildRequestOptions([
-            RequestOptions::JSON => json_decode($requestString, true),
+            RequestOptions::JSON => $this->opayTransferData,
             RequestOptions::HEADERS => [
                 'Authorization' => 'Bearer ' . $_signature,
                 'MerchantId' => $this->merchantId
@@ -217,10 +214,9 @@ class MerchantTransfer extends Merchant
 
     public final function batchToWalletApiResult(): Response
     {
-        $requestString = json_encode($this->opayBatchToWalletTransferData);
-        $_signature = hash_hmac('sha512', $requestString, $this->privateKey);
+        $_signature = $this->signature(json_encode($this->opayBatchToWalletTransferData), $this->privateKey);
         $response = $this->networkClient->post("/api/v3/transfer/batchToWallet", $this->buildRequestOptions([
-            RequestOptions::JSON => json_decode($requestString, true),
+            RequestOptions::JSON => $this->opayBatchToWalletTransferData,
             RequestOptions::HEADERS => [
                 'Authorization' => 'Bearer ' . $_signature,
                 'MerchantId' => $this->merchantId
@@ -231,7 +227,7 @@ class MerchantTransfer extends Merchant
 
     public final function opayTransferStatusApiResult(): Response
     {
-        $_signature = hash_hmac('sha512', json_encode($this->orderStatusData), $this->privateKey);
+        $_signature = $this->signature(json_encode($this->orderStatusData), $this->privateKey);
         $response = $this->networkClient->post("/api/v3/transfer/status/toWallet", $this->buildRequestOptions([
             RequestOptions::JSON => $this->orderStatusData,
             RequestOptions::HEADERS => [

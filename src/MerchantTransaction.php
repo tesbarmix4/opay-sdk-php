@@ -105,7 +105,7 @@ class MerchantTransaction extends Merchant
 
     public function status(): Response
     {
-        $_signature = hash_hmac('sha512', json_encode($this->statusData), $this->privateKey);
+        $_signature = $this->signature(json_encode($this->statusData), $this->privateKey);
         $response = $this->networkClient->post("/api/v3/transaction/status", $this->buildRequestOptions([
             RequestOptions::JSON => $this->statusData,
             RequestOptions::HEADERS => [
@@ -130,7 +130,7 @@ class MerchantTransaction extends Merchant
 
     public function bankTransferStatus(): Response
     {
-        $_signature = hash_hmac('sha512', json_encode($this->statusData), $this->privateKey);
+        $_signature = $this->signature(json_encode($this->statusData), $this->privateKey);
         $response = $this->networkClient->post("/api/v3/transaction/bankTransfer/status", $this->buildRequestOptions([
             RequestOptions::JSON => $this->bankTransferStatusData,
             RequestOptions::HEADERS => [
@@ -155,7 +155,7 @@ class MerchantTransaction extends Merchant
 
     public function ussdStatus(): Response
     {
-        $_signature = hash_hmac('sha512', json_encode($this->statusData), $this->privateKey);
+        $_signature = $this->signature(json_encode($this->statusData), $this->privateKey);
         $response = $this->networkClient->post("/api/v3/transaction/ussd/status", $this->buildRequestOptions([
             RequestOptions::JSON => $this->ussdStatusData,
             RequestOptions::HEADERS => [

@@ -6,9 +6,12 @@ namespace Opay;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
+use Opay\Tool\Helper;
 
 class Merchant
 {
+    use Helper;
+
     private $proxyAddress;
     protected $networkClient;
 

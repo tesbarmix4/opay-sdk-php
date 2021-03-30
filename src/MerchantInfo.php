@@ -35,7 +35,7 @@ class MerchantInfo extends Merchant
 
     public function userSendOtp(): Response
     {
-        $_signature = hash_hmac('sha512', json_encode($this->userSendOtpData), $this->privateKey);
+        $_signature = $this->signature(json_encode($this->userSendOtpData), $this->privateKey);
         $response = $this->networkClient->post("/api/v3/info/user/sendOTP", $this->buildRequestOptions([
             RequestOptions::JSON => $this->userSendOtpData,
             RequestOptions::HEADERS => [
@@ -75,7 +75,7 @@ class MerchantInfo extends Merchant
 
     public function userUpdate(): Response
     {
-        $_signature = hash_hmac('sha512', json_encode($this->userUpdateData), $this->privateKey);
+        $_signature = $this->signature(json_encode($this->userUpdateData), $this->privateKey);
         $response = $this->networkClient->post("/api/v3/info/user/update", $this->buildRequestOptions([
             RequestOptions::JSON => $this->userUpdateData,
             RequestOptions::HEADERS => [

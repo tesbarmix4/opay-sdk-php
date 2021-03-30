@@ -108,7 +108,7 @@ class MerchantBills extends Merchant
 
     public function bulkBills(): Response
     {
-        $_signature = hash_hmac('sha512', json_encode($this->bulkBillsData), $this->privateKey);
+        $_signature = $this->signature(json_encode($this->bulkBillsData), $this->privateKey);
         $response = $this->networkClient->post("/api/v3/bills/bulk-bills", $this->buildRequestOptions([
             RequestOptions::JSON => $this->bulkBillsData,
             RequestOptions::HEADERS => [

@@ -21,7 +21,7 @@ trait Helper
     public function check($secret, $signature, $amount, $currency, $reference, $refunded, $status, $timestamp, $token, $transactionID, $method = 'SHA3-512'): bool
     {
         $str = '{Amount:"' . $amount . '",Currency:"' . $currency . '",Reference:"' . $reference . '",Refunded:' . $refunded . ',Status:"' . $status . '",Timestamp:"' . $timestamp . '",Token:"' . $token . '",TransactionID:"' . $transactionID . '"}';
-        $_signature = hash_hmac($method, $str, $secret);
+        $_signature = $this->signature($str, $secret, $method);
         if ($signature == $_signature) {
             return true;
         }
@@ -32,5 +32,10 @@ trait Helper
     {
         $_payload = $payload['payload'];
         return $this->check($secret, $payload['sha512'], $_payload['amount'], $_payload['currency'], $_payload['reference'], $_payload['refunded'] ? 't' : 'f', $_payload['status'], $_payload['timestamp'], $_payload['token'], $_payload['transactionId'], $method);
+    }
+
+    public function signature($str, $secret, $method = 'sha512'): string
+    {
+        return hash_hmac($method, $str, $secret);
     }
 }

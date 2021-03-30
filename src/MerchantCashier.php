@@ -46,7 +46,7 @@ class MerchantCashier extends Merchant
 
     public final function getOrderStatusApiResult() : Response
     {
-        $_signature = hash_hmac('sha512', json_encode($this->orderStatusData), $this->privateKey);
+        $_signature = $this->signature(json_encode($this->orderStatusData), $this->privateKey);
         $response = $this->networkClient->post("/api/v3/cashier/status",$this->buildRequestOptions([
             RequestOptions::JSON=> $this->orderStatusData,
             RequestOptions::HEADERS=> [
@@ -59,7 +59,7 @@ class MerchantCashier extends Merchant
 
     public final function getOrderCloseApiResult() : Response
     {
-        $_signature = hash_hmac('sha512', json_encode($this->orderCloseData) , $this->privateKey);
+        $_signature = $this->signature(json_encode($this->orderCloseData), $this->privateKey);
         $response = $this->networkClient->post("/api/v3/cashier/close", $this->buildRequestOptions([
             RequestOptions::JSON=> $this->orderCloseData,
             RequestOptions::HEADERS=> [
