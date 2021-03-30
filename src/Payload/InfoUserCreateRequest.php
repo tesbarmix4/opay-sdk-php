@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class InfoUserCreateRequest implements \JsonSerializable
+class InfoUserCreateRequest extends BaseRequest implements \JsonSerializable
 {
 
     /**
@@ -164,7 +164,7 @@ class InfoUserCreateRequest implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
+        return $this->sort([
             'phoneNumber' => $this->phoneNumber,
             'email' => $this->email,
             'firstName' => $this->firstName,
@@ -172,6 +172,6 @@ class InfoUserCreateRequest implements \JsonSerializable
             'password' => $this->password,
             'address' => $this->address,
             'otp' => $this->otp
-        ];
+        ]);
     }
 }

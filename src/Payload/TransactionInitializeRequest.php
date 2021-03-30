@@ -6,7 +6,7 @@ namespace Opay\Payload;
 
 use Opay\Utility\OpayConstants;
 
-class TransactionInitializeRequest implements \JsonSerializable
+class TransactionInitializeRequest extends BaseRequest implements \JsonSerializable
 {
 
 
@@ -655,7 +655,7 @@ class TransactionInitializeRequest implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
+        return $this->sort([
             'reference' => $this->reference,
             'amount' => $this->amount,
             'currency' => $this->currency,
@@ -685,6 +685,6 @@ class TransactionInitializeRequest implements \JsonSerializable
             'dobDay' => $this->dobDay,
             'dobMonth' => $this->dobMonth,
             'dobYear' => $this->dobYear,
-        ];
+        ]);
     }
 }

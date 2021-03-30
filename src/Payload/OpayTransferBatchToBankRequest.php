@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class OpayTransferBatchToBankRequest implements \JsonSerializable
+class OpayTransferBatchToBankRequest extends BaseRequest implements \JsonSerializable
 {
     private $list;
 
@@ -26,8 +26,8 @@ class OpayTransferBatchToBankRequest implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
+        return $this->sort([
             'list' => $this->list
-        ];
+        ]);
     }
 }

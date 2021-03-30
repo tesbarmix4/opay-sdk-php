@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class ValidateBankAccountRequest implements \JsonSerializable
+class ValidateBankAccountRequest extends BaseRequest implements \JsonSerializable
 {
     private $countryCode;
     private $bankCode;
@@ -17,12 +17,12 @@ class ValidateBankAccountRequest implements \JsonSerializable
         $this->bankAccountNo = $bankAccountNumber;
     }
 
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
-        return [
-            'countryCode'=> $this->countryCode,
-            'bankCode'=> $this->bankCode,
-            'bankAccountNo'=> $this->bankAccountNo
-        ];
+        return $this->sort([
+            'countryCode' => $this->countryCode,
+            'bankCode' => $this->bankCode,
+            'bankAccountNo' => $this->bankAccountNo
+        ]);
     }
 }

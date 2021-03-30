@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class TransactionInputPinRequest implements \JsonSerializable
+class TransactionInputPinRequest extends BaseRequest implements \JsonSerializable
 {
 
     /**
@@ -28,11 +28,11 @@ class TransactionInputPinRequest implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
+        return $this->sort([
             'orderNo' => $this->orderNo,
             'reference' => $this->reference,
             'pin' => $this->pin
-        ];
+        ]);
     }
 
     /**

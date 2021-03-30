@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class TransactionUssdInitializeRequest implements \JsonSerializable
+class TransactionUssdInitializeRequest extends BaseRequest implements \JsonSerializable
 {
 
     /**
@@ -215,7 +215,7 @@ class TransactionUssdInitializeRequest implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
+        return $this->sort([
             'reference' => $this->reference,
             'productDesc' => $this->productDesc,
             'userPhone' => $this->userPhone,
@@ -225,6 +225,6 @@ class TransactionUssdInitializeRequest implements \JsonSerializable
             'callbackUrl' => $this->callbackUrl,
             'expireAt' => $this->expireAt,
             'bankCode' => $this->bankCode
-        ];
+        ]);
     }
 }

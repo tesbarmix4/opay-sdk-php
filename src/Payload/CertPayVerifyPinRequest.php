@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class CertPayVerifyPinRequest implements \JsonSerializable
+class CertPayVerifyPinRequest extends BaseRequest implements \JsonSerializable
 {
 
     /**
@@ -96,11 +96,11 @@ class CertPayVerifyPinRequest implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
+        return $this->sort([
             'reference' => $this->reference,
             'userPhone' => $this->userPhone,
             'orderNo' => $this->orderNo,
             'pin' => $this->pin,
-        ];
+        ]);
     }
 }

@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class ValidateOpayMerchantRequest implements \JsonSerializable
+class ValidateOpayMerchantRequest extends BaseRequest implements \JsonSerializable
 {
     private $email;
 
@@ -13,10 +13,10 @@ class ValidateOpayMerchantRequest implements \JsonSerializable
         $this->email = $email;
     }
 
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
-        return [
-            'email'=> $this->email
-        ];
+        return $this->sort([
+            'email' => $this->email
+        ]);
     }
 }

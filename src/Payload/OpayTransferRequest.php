@@ -6,7 +6,7 @@ namespace Opay\Payload;
 
 use Opay\Utility\OpayConstants;
 
-class OpayTransferRequest implements \JsonSerializable
+class OpayTransferRequest extends BaseRequest implements \JsonSerializable
 {
 
     private $reference;
@@ -37,27 +37,27 @@ class OpayTransferRequest implements \JsonSerializable
         $this->reason = $reason;
     }
 
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
         if ($this->receiverType === OpayConstants::TRANSFER_RECEIVER_TYPE_MERCHANT) {
             $receiver = [
-                'merchantId'=> $this->receiverMerchantId,
-                'name'=> $this->receiverName,
-                'type'=> $this->receiverType
+                'merchantId' => $this->receiverMerchantId,
+                'name' => $this->receiverName,
+                'type' => $this->receiverType
             ];
         } else {
             $receiver = [
-                'name'=> $this->receiverName,
-                'phoneNumber'=> $this->receiverPhoneNumber,
-                'type'=> $this->receiverType
+                'name' => $this->receiverName,
+                'phoneNumber' => $this->receiverPhoneNumber,
+                'type' => $this->receiverType
             ];
         }
-        return [
-            'amount'=> (string)$this->amount,
-            'currency'=> $this->currency,
-            'reason'=> $this->reason,
-            'receiver'=> $receiver,
-            'reference'=> $this->reference
-        ];
+        return $this->sort([
+            'amount' => (string)$this->amount,
+            'currency' => $this->currency,
+            'reason' => $this->reason,
+            'receiver' => $receiver,
+            'reference' => $this->reference
+        ]);
     }
 }

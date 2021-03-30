@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class BillsBulkBillsRequest implements \JsonSerializable
+class BillsBulkBillsRequest extends BaseRequest implements \JsonSerializable
 {
 
     /**
@@ -74,10 +74,10 @@ class BillsBulkBillsRequest implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
+        return $this->sort([
             'bulkData' => $this->bulkData,
             'callBackUrl' => $this->callBackUrl,
             'serviceType' => $this->serviceType
-        ];
+        ]);
     }
 }

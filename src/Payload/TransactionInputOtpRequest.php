@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class TransactionInputOtpRequest implements \JsonSerializable
+class TransactionInputOtpRequest extends BaseRequest implements \JsonSerializable
 {
 
     /**
@@ -76,10 +76,10 @@ class TransactionInputOtpRequest implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
+        return $this->sort([
             'orderNo' => $this->orderNo,
             'reference' => $this->reference,
             'otp' => $this->otp
-        ];
+        ]);
     }
 }

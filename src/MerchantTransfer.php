@@ -128,7 +128,6 @@ class MerchantTransfer extends Merchant
     {
         $requestString = json_encode($this->bankTransferData);
         $_signature = hash_hmac('sha512', $requestString, $this->privateKey);
-        dump($requestString);
         $response = $this->networkClient->post("/api/v3/transfer/toBank", $this->buildRequestOptions([
             RequestOptions::JSON => json_decode($requestString, true),
             RequestOptions::HEADERS => [
@@ -143,7 +142,6 @@ class MerchantTransfer extends Merchant
     {
         $requestString = json_encode($this->opayBatchToBankTransferData);
         $_signature = hash_hmac('sha512', $requestString, $this->privateKey);
-        dump($requestString);
         $response = $this->networkClient->post("/api/v3/transfer/batchToBank", $this->buildRequestOptions([
             RequestOptions::JSON => json_decode($requestString, true),
             RequestOptions::HEADERS => [

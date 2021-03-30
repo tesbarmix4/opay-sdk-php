@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class BillsBettingProvidersRequest implements \JsonSerializable
+class BillsBettingProvidersRequest extends BaseRequest implements \JsonSerializable
 {
     public function __construct()
     {
@@ -12,6 +12,6 @@ class BillsBettingProvidersRequest implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [];
+        return $this->sort([]);
     }
 }

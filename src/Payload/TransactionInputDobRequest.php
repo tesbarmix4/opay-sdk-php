@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class TransactionInputDobRequest implements \JsonSerializable
+class TransactionInputDobRequest extends BaseRequest implements \JsonSerializable
 {
 
     /**
@@ -28,11 +28,11 @@ class TransactionInputDobRequest implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
+        return $this->sort([
             'orderNo' => $this->orderNo,
             'reference' => $this->reference,
             'dob' => $this->dob
-        ];
+        ]);
     }
 
     /**

@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class TransactionInputPhoneRequest implements \JsonSerializable
+class TransactionInputPhoneRequest extends BaseRequest implements \JsonSerializable
 {
 
     /**
@@ -28,11 +28,11 @@ class TransactionInputPhoneRequest implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
+        return $this->sort([
             'orderNo' => $this->orderNo,
             'reference' => $this->reference,
             'phone' => $this->phone
-        ];
+        ]);
     }
 
     /**

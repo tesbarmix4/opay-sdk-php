@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class CertPayRefundStatusRequest implements \JsonSerializable
+class CertPayRefundStatusRequest extends BaseRequest implements \JsonSerializable
 {
 
     /**
@@ -97,11 +97,11 @@ class CertPayRefundStatusRequest implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
+        return $this->sort([
             'reference' => $this->reference,
             'refundReference' => $this->refundReference,
             'orderNo' => $this->orderNo,
             'refundOrderNo' => $this->refundOrderNo
-        ];
+        ]);
     }
 }

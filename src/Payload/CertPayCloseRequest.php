@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class CertPayCloseRequest implements \JsonSerializable
+class CertPayCloseRequest extends BaseRequest implements \JsonSerializable
 {
 
     /**
@@ -54,9 +54,9 @@ class CertPayCloseRequest implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
+        return $this->sort([
             'reference' => $this->reference,
             'orderNo' => $this->orderNo
-        ];
+        ]);
     }
 }

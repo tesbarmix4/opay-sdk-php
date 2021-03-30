@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class BanksRequest implements \JsonSerializable
+class BanksRequest extends BaseRequest implements \JsonSerializable
 {
     private $countryCode;
 
@@ -15,8 +15,8 @@ class BanksRequest implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
+        return $this->sort([
             'countryCode' => $this->countryCode
-        ];
+        ]);
     }
 }

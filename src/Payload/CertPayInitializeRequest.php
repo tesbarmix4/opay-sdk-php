@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class CertPayInitializeRequest implements \JsonSerializable
+class CertPayInitializeRequest extends BaseRequest implements \JsonSerializable
 {
 
     /**
@@ -185,7 +185,7 @@ class CertPayInitializeRequest implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
+        return $this->sort([
             'reference' => $this->reference,
             'amount' => $this->amount,
             'currency' => $this->currency,
@@ -194,6 +194,6 @@ class CertPayInitializeRequest implements \JsonSerializable
             'productName' => $this->productName,
             'expireAt' => $this->expireAt,
             'productDesc' => $this->productDesc
-        ];
+        ]);
     }
 }

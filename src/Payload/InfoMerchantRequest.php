@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class InfoMerchantRequest implements \JsonSerializable
+class InfoMerchantRequest extends BaseRequest implements \JsonSerializable
 {
 
     /**
@@ -31,8 +31,8 @@ class InfoMerchantRequest implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
+        return $this->sort([
             'email' => $this->email
-        ];
+        ]);
     }
 }

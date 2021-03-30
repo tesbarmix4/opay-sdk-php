@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class ChargeInitializeRequest implements \JsonSerializable
+class ChargeInitializeRequest extends BaseRequest implements \JsonSerializable
 {
 
     /**
@@ -208,7 +208,7 @@ class ChargeInitializeRequest implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
+        return $this->sort([
             'reference' => $this->reference,
             'amount' => $this->amount,
             'currency' => $this->currency,
@@ -218,6 +218,6 @@ class ChargeInitializeRequest implements \JsonSerializable
             'expireAt' => $this->expireAt,
             'chargerType' => $this->chargerType,
             'chargerId' => $this->chargerId
-        ];
+        ]);
     }
 }

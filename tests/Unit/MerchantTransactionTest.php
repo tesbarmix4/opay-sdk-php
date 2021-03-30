@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use Opay\MerchantTransaction;
+use Opay\Payload\BankTransferRequest;
 use Opay\Payload\TransactionInitializeRequest;
 use PHPUnit\Framework\TestCase;
 
@@ -94,5 +95,44 @@ class MerchantTransactionTest extends TestCase
         $this->transaction->setInitializeData($request);
         $response = $this->transaction->initialize();
         $this->assertEquals(json_encode($request, JSON_UNESCAPED_SLASHES), json_encode($this->transaction->getInitializeData(), JSON_UNESCAPED_SLASHES));
+    }
+
+    public function testSort()
+    {
+        $bankTransferRequest = new BankTransferRequest(
+            'test_01982837475858',
+            '100',
+            'NGN',
+            'NG',
+            'Andy Lee',
+            '050',
+            '22222222222222',
+            'transfer reason message'
+        );
+
+        $bank = $bankTransferRequest->jsonSerialize();
+
+        $s = new Sort();
+
+        $arr = $s->sort($bank);
+        var_dump($arr);
+        $this->assertEquals(json_encode($bank, JSON_UNESCAPED_SLASHES), json_encode($bank, JSON_UNESCAPED_SLASHES));
+    }
+}
+
+class Sort
+{
+    public function sort($array): array
+    {
+        if (!is_array($array)) {
+            return $array;
+        }
+        ksort($array);
+        foreach ($array as $key => $val) {
+            if (is_array($val)) {
+                $array[$key] = $this->sort($val);
+            }
+        }
+        return $array;
     }
 }

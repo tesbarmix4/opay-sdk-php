@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class TransactionUssdStatusRequest implements \JsonSerializable
+class TransactionUssdStatusRequest extends BaseRequest implements \JsonSerializable
 {
 
     /**
@@ -54,9 +54,9 @@ class TransactionUssdStatusRequest implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
+        return $this->sort([
             'reference' => $this->reference,
             'orderNo' => $this->orderNo
-        ];
+        ]);
     }
 }

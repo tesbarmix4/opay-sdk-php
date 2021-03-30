@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class BankTransferRequest implements \JsonSerializable
+class BankTransferRequest extends BaseRequest implements \JsonSerializable
 {
 
     private $reference;
@@ -32,17 +32,17 @@ class BankTransferRequest implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
-            'amount' => (string)$this->amount,
+        return $this->sort([
             'country' => $this->country,
+            'amount' => (string)$this->amount,
             'currency' => $this->currency,
             'reason' => $this->reason,
             'receiver' => [
-                'bankAccountNumber' => $this->receiverBankAccountNumber,
                 'bankCode' => $this->receiverBankCode,
+                'bankAccountNumber' => $this->receiverBankAccountNumber,
                 'name' => $this->receiverName
             ],
             'reference' => $this->reference
-        ];
+        ]);
     }
 }

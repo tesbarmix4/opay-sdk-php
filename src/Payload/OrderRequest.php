@@ -4,7 +4,7 @@ namespace Opay\Payload;
 
 use Opay\Utility\OpayConstants;
 
-class OrderRequest implements \JsonSerializable
+class OrderRequest extends BaseRequest implements \JsonSerializable
 {
     private $payMethods;
     private $reference;
@@ -40,10 +40,10 @@ class OrderRequest implements \JsonSerializable
         $this->mchShortName = $mchShortName;
         $this->productName = $productName;
         if ($expireAt) {
-            $this->expireAt = (string) $expireAt;
+            $this->expireAt = (string)$expireAt;
         } else {
             // use the default
-            $this->expireAt = (string) OpayConstants::ORDER_EXPIRY;
+            $this->expireAt = (string)OpayConstants::ORDER_EXPIRY;
         }
     }
 
@@ -54,23 +54,23 @@ class OrderRequest implements \JsonSerializable
      * which is a value of any type other than a resource.
      * @since 5.4.0
      */
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
-        return [
-            'payMethods'=> $this->payMethods,
-            'payTypes'=> $this->payTypes,
-            'userRequestIp'=> $this->userRequestIp,
-            'expireAt'=> $this->expireAt,
-            'mchShortName'=> $this->mchShortName,
-            'productName'=> $this->productName,
-            'reference'=> $this->reference,
-            'productDesc'=> $this->productDesc,
-            'amount'=> $this->amount,
-            'userPhone'=> $this->userPhone,
-            'currency'=> $this->currency,
-            'callbackUrl'=> $this->callbackUrl,
-            'returnUrl'=> $this->returnUrl
-        ];
+        return $this->sort([
+            'payMethods' => $this->payMethods,
+            'payTypes' => $this->payTypes,
+            'userRequestIp' => $this->userRequestIp,
+            'expireAt' => $this->expireAt,
+            'mchShortName' => $this->mchShortName,
+            'productName' => $this->productName,
+            'reference' => $this->reference,
+            'productDesc' => $this->productDesc,
+            'amount' => $this->amount,
+            'userPhone' => $this->userPhone,
+            'currency' => $this->currency,
+            'callbackUrl' => $this->callbackUrl,
+            'returnUrl' => $this->returnUrl
+        ]);
     }
 
     /**

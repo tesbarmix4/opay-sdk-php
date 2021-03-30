@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class ValidateOpayUserRequest implements \JsonSerializable
+class ValidateOpayUserRequest extends BaseRequest implements \JsonSerializable
 {
     private $phoneNumber;
 
@@ -13,10 +13,10 @@ class ValidateOpayUserRequest implements \JsonSerializable
         $this->phoneNumber = $phoneNumber;
     }
 
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
-        return [
-            'phoneNumber'=> $this->phoneNumber
-        ];
+        return $this->sort([
+            'phoneNumber' => $this->phoneNumber
+        ]);
     }
 }

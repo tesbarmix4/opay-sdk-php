@@ -51,11 +51,17 @@ class TransferToBank extends Initialize
  * transfer to bank
  *
  * $transfer = new transferToBank();
- * $response = $transfer->transferToUser();
+ * $response = $transfer->transferToBank();
  * dump($response);
  * $status = $transfer->getTransferBankStatus();
  * dump($status);
  */
+
+$transfer = new transferToBank();
+$response = $transfer->transferToBank();
+dump($response);
+$status = $transfer->getTransferBankStatus();
+dump($status);
 
 
 /**

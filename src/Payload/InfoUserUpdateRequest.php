@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class InfoUserUpdateRequest implements \JsonSerializable
+class InfoUserUpdateRequest extends BaseRequest implements \JsonSerializable
 {
 
     /**
@@ -119,12 +119,12 @@ class InfoUserUpdateRequest implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
+        return $this->sort([
             'phoneNumber' => $this->phoneNumber,
             'email' => $this->email,
             'firstName' => $this->firstName,
             'lastName' => $this->lastName,
             'address' => $this->address,
-        ];
+        ]);
     }
 }

@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class BillsValidateRequest implements \JsonSerializable
+class BillsValidateRequest extends BaseRequest implements \JsonSerializable
 {
 
     /**
@@ -76,10 +76,10 @@ class BillsValidateRequest implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
+        return $this->sort([
             'serviceType' => $this->serviceType,
             'provider' => $this->provider,
             'customerId' => $this->customerId
-        ];
+        ]);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Opay\Payload;
 
-class OrderStatusRequest implements \JsonSerializable
+class OrderStatusRequest extends BaseRequest implements \JsonSerializable
 {
     private $orderNo;
     private $reference;
@@ -20,12 +20,12 @@ class OrderStatusRequest implements \JsonSerializable
      * which is a value of any type other than a resource.
      * @since 5.4.0
      */
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
-        return [
-            'orderNo'=> $this->orderNo,
-            'reference'=> $this->reference
-        ];
+        return $this->sort([
+            'orderNo' => $this->orderNo,
+            'reference' => $this->reference
+        ]);
     }
 
     /**

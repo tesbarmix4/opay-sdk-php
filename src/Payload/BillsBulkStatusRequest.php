@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class BillsBulkStatusRequest implements \JsonSerializable
+class BillsBulkStatusRequest extends BaseRequest implements \JsonSerializable
 {
 
     /**
@@ -52,9 +52,9 @@ class BillsBulkStatusRequest implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
+        return $this->sort([
             'serviceType' => $this->serviceType,
             'bulkStatusRequest' => $this->bulkStatusRequest
-        ];
+        ]);
     }
 }
