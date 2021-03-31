@@ -43,13 +43,13 @@ class Transaction extends Initialize
         return $this->init($request);
     }
 
-    public function initByBankcard(): Response
+    public function initByBankcard($currency = 'NGN', $country = 'NG'): Response
     {
         $request = new TransactionInitializeRequest();
         $request->setReference($this->getReference());
         $request->setAmount("100");
-        $request->setCurrency("NGN");
-        $request->setCountry("NG");
+        $request->setCurrency($currency);
+        $request->setCountry($country);
         $request->setPayType("bankcard");
         $request->setFirstName("li");
         $request->setLastName("jian");
@@ -64,11 +64,13 @@ class Transaction extends Initialize
         $request->setReason("transaction reason message");
         $request->setCallbackUrl("https://you.domain.com/callbackUrl");
         $request->setExpireAt("100");
-        $request->setBillingZip("xxx");
-        $request->setBillingCity("xxx");
-        $request->setBillingAddress("xxx");
-        $request->setBillingState("xxx");
-        $request->setBillingCountry("xxx");
+        if ($currency == "USD") {
+            $request->setBillingZip("sc");
+            $request->setBillingCity("ca");
+            $request->setBillingAddress("address");
+            $request->setBillingState("NY");
+            $request->setBillingCountry("US");
+        }
         return $this->init($request);
     }
 
@@ -207,6 +209,11 @@ class Transaction extends Initialize
                     $response = $this->initByBankaccount();
                     break;
                 }
+                case 'bankcard_usd':
+                {
+                    $response = $this->initByBankcard("USD","USA");
+                    break;
+                }
                 case 'bankcard':
                 {
                     $response = $this->initByBankcard();
@@ -264,6 +271,7 @@ class Transaction extends Initialize
                 Header("Location: $url");
             }
         }
+        dump($response);
     }
 }
 
