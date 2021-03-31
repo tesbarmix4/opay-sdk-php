@@ -60,7 +60,8 @@ Access sample codes & implementations right inside the [http_example](`http_exam
 
 
 ##### Transaction
-- Transaction example : [http_example/transaction/TestTransaction.php](http_example/transaction/TestTransaction.php)
+- Transaction test : [http_example/transaction/TestTransaction.php](http_example/transaction/TestTransaction.php)
+- Transaction example : [http_example/transaction/html/initialize.html](http_example/transaction/html/initialize.html)
 - BankTransfer transaction : [http_example/transaction/bank_transfer/BankTransfer.php](http_example/transaction/bank_transfer/BankTransfer.php)
 - Ussd transaction : [http_example/transaction/ussd/Ussd.php](http_example/transaction/ussd/Ussd.php)
 

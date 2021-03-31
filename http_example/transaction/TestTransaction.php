@@ -1,5 +1,7 @@
 <?php
 
+use Opay\Result\Response;
+
 require_once('../Initialize.php');
 require_once('../Config.php');
 require_once('./Transaction.php');
@@ -79,26 +81,6 @@ class TestTransaction
 
     }
 
-    /**
-     * pin + opt
-     * @return string
-     *
-     */
-    public function testPinOpt(): string
-    {
-        $response = $this->transaction->initByBankaccount();
-        if ($response->getCode() != '00000') {
-            return 'error';
-        }
-
-        for(;;){
-            $response = $this->transaction->getStatus();
-            if ($response->getCode() != '00000') {
-                return 'error';
-            }
-        }
-
-    }
 }
 
 (new TestTransaction())->test();

@@ -22,6 +22,10 @@ class Transaction extends Initialize
         $this->transaction = new MerchantTransaction($this->config->getEndpointBaseUrl(), $this->config->getPubKey(), $this->config->getPrvKey(), $this->config->getMerchantId());
     }
 
+    /**
+     * Not Recommended
+     * @return Response
+     */
     public function initByToken(): Response
     {
         $request = new TransactionInitializeRequest();
@@ -30,7 +34,7 @@ class Transaction extends Initialize
         $request->setCurrency("NGN");
         $request->setCountry("NG");
         $request->setPayType("token");
-        $request->setToken("xxxx");
+        $request->setToken("BDEFDFDFE43F4DGD2");
         $request->setCustomerPhone("+2348686868686");
         $request->setCustomerEmail("123@qq.com");
         $request->setReason("transaction reason message");
@@ -47,16 +51,16 @@ class Transaction extends Initialize
         $request->setCurrency("NGN");
         $request->setCountry("NG");
         $request->setPayType("bankcard");
-        $request->setFirstName("firstName");
-        $request->setLastName("lastName");
-        $request->setCustomerEmail("123@qq.com");
-        $request->setCardNumber("4392xxxxxxxxxxxx");
-        $request->setCardDateMonth("01");
+        $request->setFirstName("li");
+        $request->setLastName("jian");
+        $request->setCustomerEmail("dd@opay-inc.com");
+        $request->setCardNumber("5061460410121111105");
+        $request->setCardDateMonth("12");
         $request->setCardDateYear("22");
-        $request->setCardCVC("122");
+        $request->setCardCVC("561");
         $request->setReturn3dsUrl("http://www.your.domain.com");
-        $request->setBankAccountNumber("22445566787");
-        $request->setBankCode("057");
+        $request->setBankAccountNumber("256620112018025");
+        $request->setBankCode("033");
         $request->setReason("transaction reason message");
         $request->setCallbackUrl("https://you.domain.com/callbackUrl");
         $request->setExpireAt("100");
@@ -111,7 +115,7 @@ class Transaction extends Initialize
         $request = new TransactionInputOtpRequest();
         $request->setOrderNo($this->getOrderNumber());
         $request->setReference($this->getReference());
-        $request->setOtp("123456");
+        $request->setOtp("543210");
 
         $this->transaction->setInputOtpData($request);
         return $this->transaction->inputOtp();
@@ -133,7 +137,7 @@ class Transaction extends Initialize
         $request = new TransactionInputPinRequest();
         $request->setOrderNo($this->getOrderNumber());
         $request->setReference($this->getReference());
-        $request->setPin("123456");
+        $request->setPin("1105");
 
         $this->transaction->setInputPinData($request);
         return $this->transaction->inputPin();
@@ -149,4 +153,118 @@ class Transaction extends Initialize
         return $this->transaction->status();
     }
 
+    public function exec($case): string
+    {
+        switch ($case) {
+            case 'INPUT-PIN':
+            {
+                $url = 'html/input-pin.html?ref=' . $this->getReference();
+                break;
+            }
+            case 'INPUT-OTP':
+            {
+                $url = 'html/input-otp.html?ref=' . $this->getReference();
+                break;
+            }
+            case 'INPUT-PHONE':
+            {
+                $url = 'html/input-phone.html?ref=' . $this->getReference();
+                break;
+            }
+            case 'INPUT-DOB':
+            {
+                $url = 'html/input-dob.html?ref=' . $this->getReference();
+                break;
+            }
+            case 'SUCCESS':
+            {
+                $url = 'html/success.html?ref=' . $this->getReference();
+                break;
+            }
+            default:
+            {
+                $url = '';
+                break;
+            }
+        }
+        return $url;
+    }
+
+    public function getContent()
+    {
+        $response = null;
+        $type = $_GET['type'];
+        if ($type == 'init') {
+            $action = $_GET['action'];
+            switch ($action) {
+                case 'token':
+                {
+                    $response = $this->initByToken();
+                    break;
+                }
+                case 'bankaccount':
+                {
+                    $response = $this->initByBankaccount();
+                    break;
+                }
+                case 'bankcard':
+                {
+                    $response = $this->initByBankcard();
+                    break;
+                }
+            }
+            if ($response->getCode() == '00000') {
+                $url = '';
+                for (; ;) {
+                    $response = $this->getStatus();
+                    $case = $response->getData()->getStatus();
+                    $url = $this->exec($case);
+                    if ($url != '') {
+                        break;
+                    }
+                }
+                Header("Location: $url");
+            }
+        } else {
+            $ref = $_GET['ref'];
+            $this->setReference($ref);
+            $action = $_GET['action'];
+            switch ($action) {
+                case 'otp':
+                {
+                    $response = $this->setOtp();
+                    break;
+                }
+                case 'pin':
+                {
+                    $response = $this->setPin();
+                    break;
+                }
+                case 'phone':
+                {
+                    $response = $this->setPhone();
+                    break;
+                }
+                case 'dob':
+                {
+                    $response = $this->setDob();
+                    break;
+                }
+            }
+            if ($response->getCode() == '00000') {
+                $url = '';
+                for (; ;) {
+                    $response = $this->getStatus();
+                    $case = $response->getData()->getStatus();
+                    $url = $this->exec($case);
+                    if ($url != '') {
+                        break;
+                    }
+                }
+                Header("Location: $url");
+            }
+        }
+    }
 }
+
+(new Transaction)->getContent();
