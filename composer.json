@@ -4,8 +4,8 @@
   "type": "library",
   "authors": [
     {
-      "name": "Mustafa Segun",
-      "email": "segsalerty@yahoo.com"
+      "name": "Jiang Tao",
+      "email": "tao.jiang@opay-inc.com"
     }
   ],
   "autoload": {
@@ -28,7 +28,7 @@
     "guzzlehttp/guzzle": "^6.0.0",
     "ext-openssl": "*",
     "ext-json": "*",
-    "symfony/var-dumper": "^5.1"
+    "symfony/var-dumper": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^8.4"
