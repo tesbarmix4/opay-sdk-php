@@ -11,7 +11,7 @@ PHP Library that wraps endpoints documented [https://documentation.opayweb.com/]
 
 #### Installation:
 ```sh
-$ composer require opay/merchant-cashier-php
+$ composer require opay-services/opay-sdk-php
 ```
 
 #### Setup:
