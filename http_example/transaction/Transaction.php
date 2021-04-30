@@ -53,6 +53,7 @@ class Transaction extends Initialize
         $request->setPayType("bankcard");
         $request->setFirstName("li");
         $request->setLastName("jian");
+        $request->setCustomerPhone("+234xxxxxxxx");
         $request->setCustomerEmail("dd@opay-inc.com");
         $request->setCardNumber("5061460410121111105");
         $request->setCardDateMonth("12");
