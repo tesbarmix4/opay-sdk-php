@@ -17,7 +17,7 @@ class CertPayRefundStatusRequest extends BaseRequest implements \JsonSerializabl
      * Order number of OPay payment
      * @var string
      */
-    private $orderNo;
+    private $orderNo = '';
     /**
      * Refund rder number of merchant (unique refund order number from merchant platform)
      * @var string

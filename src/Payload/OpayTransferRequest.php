@@ -55,6 +55,7 @@ class OpayTransferRequest extends BaseRequest implements \JsonSerializable
         return $this->sort([
             'amount' => (string)$this->amount,
             'currency' => $this->currency,
+            'country' => $this->country,
             'reason' => $this->reason,
             'receiver' => $receiver,
             'reference' => $this->reference

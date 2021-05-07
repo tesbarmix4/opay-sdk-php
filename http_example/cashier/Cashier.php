@@ -2,6 +2,10 @@
 
 use Opay\MerchantCashier;
 use Opay\Payload\OrderCloseRequest;
+use Opay\Payload\OrderRefundBankAccountRequest;
+use Opay\Payload\OrderRefundOpayAccountRequest;
+use Opay\Payload\OrderRefundOriginalRequest;
+use Opay\Payload\OrderRefundStatusRequest;
 use Opay\Payload\OrderRequest;
 use Opay\Payload\OrderStatusRequest;
 use Opay\Result\Response;
@@ -69,13 +73,69 @@ class Cashier extends Initialize
         return $this->merchantCashier->getOrderStatusApiResult();
     }
 
-
     public function close(): Response
     {
         $_orderCloseRequest = new OrderCloseRequest($this->getOrderNumber(), $this->getReference());
         $this->merchantCashier->orderClose($_orderCloseRequest);
         return $this->merchantCashier->getOrderCloseApiResult();
     }
+
+    public function refundOpayAccount(): Response
+    {
+        $request = new OrderRefundOpayAccountRequest();
+        $request->setReference($this->getGenerateReference());
+        $request->setOriginalReference($this->getReference());
+        $request->setAmount('100');
+        $request->setCountry('NG');
+        $request->setCurrency('NGN');
+        $request->setReason('refund reason');
+        $request->setRefundType('refund2opayaccount');
+        $request->setPhoneNumber('+2348036952110');
+        $request->setType('USER');
+        $this->merchantCashier->orderRefundOpayAccount($request);
+        return $this->merchantCashier->getOrderRefundApiResult();
+    }
+
+    public function refundOriginal(): Response
+    {
+        $request = new OrderRefundOriginalRequest();
+        $request->setReference($this->getGenerateReference());
+        $request->setOriginalReference($this->getReference());
+        $request->setAmount('100');
+        $request->setCountry('NG');
+        $request->setCurrency('NGN');
+        $request->setReason('refund reason');
+        $request->setRefundType('refundoriginal');
+        $this->merchantCashier->orderRefundOriginal($request);
+        return $this->merchantCashier->getOrderRefundApiResult();
+    }
+
+    public function refundBankAccount(): Response
+    {
+        $request = new OrderRefundBankAccountRequest();
+        $request->setReference($this->getGenerateReference());
+        $request->setOriginalReference($this->getReference());
+        $request->setAmount('100');
+        $request->setCountry('NG');
+        $request->setCurrency('NGN');
+        $request->setReason('refund reason');
+        $request->setBankAccountNumber('1325476785436');
+        $request->setBankCode('055');
+        $request->setRefundType('refund2bankaccount');
+        $this->merchantCashier->orderRefundBankAccount($request);
+        return $this->merchantCashier->getOrderRefundApiResult();
+    }
+
+    public function refundStatus(): Response
+    {
+        $request = new OrderRefundStatusRequest();
+        $request->setReference($this->getReference());
+        $request->setOrderNo($this->getOrderNumber());
+        $this->merchantCashier->orderRefundStatus($request);
+        return $this->merchantCashier->getOrderRefundStatusApiResult();
+    }
+
+
 }
 
 

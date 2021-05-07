@@ -4,7 +4,7 @@ namespace Opay\Payload;
 
 class OrderStatusRequest extends BaseRequest implements \JsonSerializable
 {
-    private $orderNo;
+    private $orderNo = '';
     private $reference;
 
     public function __construct(string $orderNo, string $reference)

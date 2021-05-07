@@ -221,18 +221,6 @@ class Transaction extends Initialize
                     break;
                 }
             }
-            if ($response->getCode() == '00000') {
-                $url = '';
-                for (; ;) {
-                    $response = $this->getStatus();
-                    $case = $response->getData()->getStatus();
-                    $url = $this->exec($case);
-                    if ($url != '') {
-                        break;
-                    }
-                }
-                Header("Location: $url");
-            }
         } else {
             $ref = $_GET['ref'];
             $this->setReference($ref);
@@ -259,18 +247,18 @@ class Transaction extends Initialize
                     break;
                 }
             }
-            if ($response->getCode() == '00000') {
-                $url = '';
-                for (; ;) {
-                    $response = $this->getStatus();
-                    $case = $response->getData()->getStatus();
-                    $url = $this->exec($case);
-                    if ($url != '') {
-                        break;
-                    }
+        }
+        if ($response->getCode() == '00000') {
+            $url = '';
+            for (; ;) {
+                $response = $this->getStatus();
+                $case = $response->getData()->getStatus();
+                $url = $this->exec($case);
+                if ($url != '') {
+                    break;
                 }
-                Header("Location: $url");
             }
+            Header("Location: $url");
         }
         dump($response);
     }

@@ -4,23 +4,13 @@
 namespace Opay\Payload;
 
 
-class CertPayCloseRequest extends BaseRequest implements \JsonSerializable
+class OrderRefundStatusRequest extends BaseRequest implements \JsonSerializable
 {
-
-    /**
-     * Order number of merchant (unique order number from merchant platform)
-     * @var string
-     */
-    private $reference;
-
-    /**
-     * Order number of OPay payment
-     * @var string
-     */
+    private $reference = '';
     private $orderNo = '';
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getReference(): string
     {
@@ -28,15 +18,15 @@ class CertPayCloseRequest extends BaseRequest implements \JsonSerializable
     }
 
     /**
-     * @param string $reference
+     * @param mixed $reference
      */
-    public function setReference(string $reference): void
+    public function setReference($reference): void
     {
         $this->reference = $reference;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getOrderNo(): string
     {
@@ -44,9 +34,9 @@ class CertPayCloseRequest extends BaseRequest implements \JsonSerializable
     }
 
     /**
-     * @param string $orderNo
+     * @param mixed $orderNo
      */
-    public function setOrderNo(string $orderNo): void
+    public function setOrderNo($orderNo): void
     {
         $this->orderNo = $orderNo;
     }

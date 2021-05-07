@@ -10,7 +10,7 @@ class BulkStatusData
      * Order number of OPay payment (Optional)
      * @var string
      */
-    private $orderNo;
+    private $orderNo = '';
 
     /**
      * Order number of merchant (unique order number from merchant platform)

@@ -4,8 +4,15 @@ namespace Opay;
 
 use GuzzleHttp\RequestOptions;
 use Opay\Payload\OrderCloseRequest;
+use Opay\Payload\OrderRefundBankAccountRequest;
+use Opay\Payload\OrderRefundOpayAccountRequest;
+use Opay\Payload\OrderRefundOriginalRequest;
+use Opay\Payload\OrderRefundStatusRequest;
 use Opay\Payload\OrderRequest;
 use Opay\Payload\OrderStatusRequest;
+use Opay\Result\OrderRefundResponse;
+use Opay\Result\OrderRefundResponseData;
+use Opay\Result\OrderRefundStatusResponse;
 use Opay\Result\OrderResponse;
 use Opay\Result\Response;
 
@@ -14,66 +21,118 @@ class MerchantCashier extends Merchant
     private $orderData;
     private $orderStatusData;
     private $orderCloseData;
+    private $orderRefundData;
+    private $orderRefundStatusData;
 
     public function __construct(string $environmentBaseUrl, string $pbKey, string $pvKey,
-                                string $merchantId, ?array $proxyAddress = null) {
+                                string $merchantId, ?array $proxyAddress = null)
+    {
         parent::__construct($environmentBaseUrl, $pbKey, $pvKey, $merchantId, $proxyAddress);
     }
 
-    public final function order(OrderRequest $order) : void {
+    public final function order(OrderRequest $order): void
+    {
         $this->orderData = $order;
     }
 
-    public final function orderStatus(OrderStatusRequest $orderStatus) : void {
+    public final function orderStatus(OrderStatusRequest $orderStatus): void
+    {
         $this->orderStatusData = $orderStatus;
     }
 
-    public final function orderClose(OrderCloseRequest $orderClose) : void {
+    public final function orderRefundOpayAccount(OrderRefundOpayAccountRequest $request): void
+    {
+        $this->orderRefundData = $request;
+    }
+
+    public final function orderRefundBankAccount(OrderRefundBankAccountRequest $request): void
+    {
+        $this->orderRefundData = $request;
+    }
+
+    public final function orderRefundOriginal(OrderRefundOriginalRequest $request): void
+    {
+        $this->orderRefundData = $request;
+    }
+
+    public final function orderRefundStatus(OrderRefundStatusRequest $request): void
+    {
+        $this->orderRefundStatusData = $request;
+    }
+
+    public final function orderClose(OrderCloseRequest $orderClose): void
+    {
         $this->orderCloseData = $orderClose;
     }
 
-    public final function getOrderApiResult() : Response
+    public final function getOrderApiResult(): Response
     {
         $response = $this->networkClient->post('/api/v3/cashier/initialize', $this->buildRequestOptions([
-            RequestOptions::JSON=> $this->orderData,
-            RequestOptions::HEADERS=> [
-                'Authorization'=> 'Bearer '.$this->publicKey,
-                'MerchantId'=> $this->merchantId
+            RequestOptions::JSON => $this->orderData,
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $this->publicKey,
+                'MerchantId' => $this->merchantId
             ]
         ]));
         return OrderResponse::cast(new OrderResponse(), json_decode($response->getBody()->getContents(), false));
     }
 
-    public final function getOrderStatusApiResult() : Response
+    public final function getOrderStatusApiResult(): Response
     {
         $_signature = $this->signature(json_encode($this->orderStatusData), $this->privateKey);
-        $response = $this->networkClient->post("/api/v3/cashier/status",$this->buildRequestOptions([
-            RequestOptions::JSON=> $this->orderStatusData,
-            RequestOptions::HEADERS=> [
-                'Authorization'=> 'Bearer '.$_signature,
-                'MerchantId'=> $this->merchantId
+        $response = $this->networkClient->post("/api/v3/cashier/status", $this->buildRequestOptions([
+            RequestOptions::JSON => $this->orderStatusData,
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $_signature,
+                'MerchantId' => $this->merchantId
             ]
         ]));
         return OrderResponse::cast(new OrderResponse(), json_decode($response->getBody()->getContents(), false));
     }
 
-    public final function getOrderCloseApiResult() : Response
+    public final function getOrderCloseApiResult(): Response
     {
         $_signature = $this->signature(json_encode($this->orderCloseData), $this->privateKey);
         $response = $this->networkClient->post("/api/v3/cashier/close", $this->buildRequestOptions([
-            RequestOptions::JSON=> $this->orderCloseData,
-            RequestOptions::HEADERS=> [
-                'Authorization'=> 'Bearer '.$_signature,
-                'MerchantId'=> $this->merchantId
+            RequestOptions::JSON => $this->orderCloseData,
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $_signature,
+                'MerchantId' => $this->merchantId
             ]
         ]));
         return OrderResponse::cast(new OrderResponse(), json_decode($response->getBody()->getContents(), false));
+    }
+
+    public final function getOrderRefundApiResult(): Response
+    {
+        $_signature = $this->signature(json_encode($this->orderRefundData), $this->privateKey);
+        $response = $this->networkClient->post("/api/v3/cashier/refund", $this->buildRequestOptions([
+            RequestOptions::JSON => $this->orderRefundData,
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $_signature,
+                'MerchantId' => $this->merchantId
+            ]
+        ]));
+        return OrderRefundResponse::cast(new OrderRefundResponse(), json_decode($response->getBody()->getContents(), false));
+    }
+
+    public final function getOrderRefundStatusApiResult(): Response
+    {
+        $_signature = $this->signature(json_encode($this->orderRefundStatusData), $this->privateKey);
+        $response = $this->networkClient->post("/api/v3/cashier/refund/status", $this->buildRequestOptions([
+            RequestOptions::JSON => $this->orderRefundStatusData,
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $_signature,
+                'MerchantId' => $this->merchantId
+            ]
+        ]));
+        return OrderRefundStatusResponse::cast(new OrderRefundStatusResponse(), json_decode($response->getBody()->getContents(), false));
     }
 
     /**
      * @return OrderRequest
      */
-    public final function getOrderData() : OrderRequest
+    public final function getOrderData(): OrderRequest
     {
         return $this->orderData;
     }
@@ -81,7 +140,7 @@ class MerchantCashier extends Merchant
     /**
      * @return OrderStatusRequest
      */
-    public final function getOrderStatusData() : OrderStatusRequest
+    public final function getOrderStatusData(): OrderStatusRequest
     {
         return $this->orderStatusData;
     }
@@ -89,9 +148,26 @@ class MerchantCashier extends Merchant
     /**
      * @return OrderCloseRequest
      */
-    public final function getOrderCloseData() : OrderCloseRequest
+    public final function getOrderCloseData(): OrderCloseRequest
     {
         return $this->orderCloseData;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getOrderRefundData()
+    {
+        return $this->orderRefundData;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrderRefundStatusData()
+    {
+        return $this->orderRefundStatusData;
+    }
+
 
 }
