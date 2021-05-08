@@ -4,7 +4,7 @@
 namespace Opay\Result;
 
 
-class ValidateOpayUserResponseData
+class ValidateOpayUserResponseData implements \JsonSerializable
 {
     private $userId;
     private $phoneNumber;
@@ -13,7 +13,7 @@ class ValidateOpayUserResponseData
     private $email;
     private $address;
 
-    public static function cast(ValidateOpayUserResponseData $destination, ?\stdClass $source) : ValidateOpayUserResponseData
+    public static function cast(ValidateOpayUserResponseData $destination, ?\stdClass $source): ValidateOpayUserResponseData
     {
         if ($source) {
             $sourceReflection = new \ReflectionObject($source);
@@ -26,8 +26,18 @@ class ValidateOpayUserResponseData
         return $destination;
     }
 
-    public function toArray() : array {
-        return (array) $this;
+    public function jsonSerialize(): array
+    {
+        $data = [];
+        foreach ($this as $key => $val) {
+            if ($val !== null) $data[$key] = $val;
+        }
+        return $data;
+    }
+
+    public function toArray(): array
+    {
+        return (array)$this;
     }
 
     /**
@@ -39,11 +49,27 @@ class ValidateOpayUserResponseData
     }
 
     /**
+     * @param mixed $userId
+     */
+    public function setUserId($userId): void
+    {
+        $this->userId = $userId;
+    }
+
+    /**
      * @return mixed
      */
     public function getPhoneNumber()
     {
         return $this->phoneNumber;
+    }
+
+    /**
+     * @param mixed $phoneNumber
+     */
+    public function setPhoneNumber($phoneNumber): void
+    {
+        $this->phoneNumber = $phoneNumber;
     }
 
     /**
@@ -55,11 +81,27 @@ class ValidateOpayUserResponseData
     }
 
     /**
+     * @param mixed $firstName
+     */
+    public function setFirstName($firstName): void
+    {
+        $this->firstName = $firstName;
+    }
+
+    /**
      * @return mixed
      */
     public function getLastName()
     {
         return $this->lastName;
+    }
+
+    /**
+     * @param mixed $lastName
+     */
+    public function setLastName($lastName): void
+    {
+        $this->lastName = $lastName;
     }
 
     /**
@@ -71,10 +113,26 @@ class ValidateOpayUserResponseData
     }
 
     /**
+     * @param mixed $email
+     */
+    public function setEmail($email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
      * @return mixed
      */
     public function getAddress()
     {
         return $this->address;
+    }
+
+    /**
+     * @param mixed $address
+     */
+    public function setAddress($address): void
+    {
+        $this->address = $address;
     }
 }

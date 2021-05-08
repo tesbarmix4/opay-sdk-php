@@ -4,7 +4,7 @@
 namespace Opay\Result;
 
 
-class CertPayVerifyPinResponseData
+class CertPayVerifyPinResponseData implements \JsonSerializable
 {
     /**
      * Order number from OPay payment
@@ -45,6 +45,15 @@ class CertPayVerifyPinResponseData
             }
         }
         return $destination;
+    }
+
+    public function jsonSerialize(): array
+    {
+        $data = [];
+        foreach ($this as $key => $val) {
+            if ($val !== null) $data[$key] = $val;
+        }
+        return $data;
     }
 
     public function toArray(): array

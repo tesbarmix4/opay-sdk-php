@@ -4,12 +4,12 @@
 namespace Opay\Result;
 
 
-class ValidateBankAccountResponseData
+class ValidateBankAccountResponseData implements \JsonSerializable
 {
     private $accountNo;
     private $accountName;
 
-    public static function cast(ValidateBankAccountResponseData $destination, ?\stdClass $source) : ValidateBankAccountResponseData
+    public static function cast(ValidateBankAccountResponseData $destination, ?\stdClass $source): ValidateBankAccountResponseData
     {
         if ($source) {
             $sourceReflection = new \ReflectionObject($source);
@@ -22,8 +22,18 @@ class ValidateBankAccountResponseData
         return $destination;
     }
 
-    public function toArray() : array {
-        return (array) $this;
+    public function jsonSerialize(): array
+    {
+        $data = [];
+        foreach ($this as $key => $val) {
+            if ($val !== null) $data[$key] = $val;
+        }
+        return $data;
+    }
+
+    public function toArray(): array
+    {
+        return (array)$this;
     }
 
     /**
@@ -35,10 +45,27 @@ class ValidateBankAccountResponseData
     }
 
     /**
+     * @param mixed $accountNo
+     */
+    public function setAccountNo($accountNo): void
+    {
+        $this->accountNo = $accountNo;
+    }
+
+    /**
      * @return mixed
      */
     public function getAccountName()
     {
         return $this->accountName;
     }
+
+    /**
+     * @param mixed $accountName
+     */
+    public function setAccountName($accountName): void
+    {
+        $this->accountName = $accountName;
+    }
+
 }

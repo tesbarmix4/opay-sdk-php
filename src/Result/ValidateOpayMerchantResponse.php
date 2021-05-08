@@ -14,7 +14,7 @@ class ValidateOpayMerchantResponse extends Response
     /**
      * @return ValidateOpayMerchantResponseData
      */
-    public function getData() : ValidateOpayMerchantResponseData
+    public function getData(): ValidateOpayMerchantResponseData
     {
         return $this->data;
     }

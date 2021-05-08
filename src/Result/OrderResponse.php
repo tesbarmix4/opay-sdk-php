@@ -13,7 +13,7 @@ class OrderResponse extends Response
     /**
      * @return OrderResponseData
      */
-    public function getData() : OrderResponseData
+    public function getData(): OrderResponseData
     {
         return $this->data;
     }

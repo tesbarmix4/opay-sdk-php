@@ -4,7 +4,7 @@
 namespace Opay\Result;
 
 
-class InfoMerchantResponseData
+class InfoMerchantResponseData implements \JsonSerializable
 {
     /**
      * merchantId
@@ -36,6 +36,15 @@ class InfoMerchantResponseData
             }
         }
         return $destination;
+    }
+
+    public function jsonSerialize(): array
+    {
+        $data = [];
+        foreach ($this as $key => $val) {
+            if ($val !== null) $data[$key] = $val;
+        }
+        return $data;
     }
 
     public function toArray(): array

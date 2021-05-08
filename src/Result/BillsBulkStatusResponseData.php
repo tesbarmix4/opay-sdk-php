@@ -6,7 +6,7 @@ namespace Opay\Result;
 
 use stdClass;
 
-class BillsBulkStatusResponseData
+class BillsBulkStatusResponseData implements \JsonSerializable
 {
     /**
      * Order number of OPay payment
@@ -46,6 +46,15 @@ class BillsBulkStatusResponseData
             }
         }
         return $destination;
+    }
+
+    public function jsonSerialize(): array
+    {
+        $data = [];
+        foreach ($this as $key => $val) {
+            if ($val !== null) $data[$key] = $val;
+        }
+        return $data;
     }
 
     public function toArray(): array
@@ -116,5 +125,5 @@ class BillsBulkStatusResponseData
     {
         $this->errorMsg = $errorMsg;
     }
-    
+
 }

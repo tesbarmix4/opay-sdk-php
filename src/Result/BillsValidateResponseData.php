@@ -6,7 +6,7 @@ namespace Opay\Result;
 
 use stdClass;
 
-class BillsValidateResponseData
+class BillsValidateResponseData implements \JsonSerializable
 {
     /**
      * provider
@@ -50,6 +50,15 @@ class BillsValidateResponseData
             }
         }
         return $destination;
+    }
+
+    public function jsonSerialize(): array
+    {
+        $data = [];
+        foreach ($this as $key => $val) {
+            if ($val !== null) $data[$key] = $val;
+        }
+        return $data;
     }
 
     public function toArray(): array

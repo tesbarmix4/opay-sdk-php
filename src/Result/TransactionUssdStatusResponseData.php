@@ -4,7 +4,7 @@
 namespace Opay\Result;
 
 
-class TransactionUssdStatusResponseData
+class TransactionUssdStatusResponseData implements \JsonSerializable
 {
     /**
      * Order number from OPay payment
@@ -124,6 +124,15 @@ class TransactionUssdStatusResponseData
     public function setStatus(string $status): void
     {
         $this->status = $status;
+    }
+
+    public function jsonSerialize(): array
+    {
+        $data = [];
+        foreach ($this as $key => $val) {
+            if ($val !== null) $data[$key] = $val;
+        }
+        return $data;
     }
 
     public function toArray(): array

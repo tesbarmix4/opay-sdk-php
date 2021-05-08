@@ -2,10 +2,10 @@
 
 namespace Opay\Result;
 
-class OrderRefundResponseData
+class OrderRefundResponseData implements \JsonSerializable
 {
-    public $orderNo;
-    public $orderStatus;
+    private $orderNo;
+    private $orderStatus;
 
     public static function cast(OrderRefundResponseData $destination, ?\stdClass $source): OrderRefundResponseData
     {
@@ -18,6 +18,15 @@ class OrderRefundResponseData
             }
         }
         return $destination;
+    }
+
+    public function jsonSerialize(): array
+    {
+        $data = [];
+        foreach ($this as $key => $val) {
+            if ($val !== null) $data[$key] = $val;
+        }
+        return $data;
     }
 
     public function toArray(): array

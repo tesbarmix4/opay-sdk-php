@@ -4,7 +4,7 @@
 namespace Opay\Result;
 
 
-class InfoUserCreateResponseData
+class InfoUserCreateResponseData implements \JsonSerializable
 {
     /**
      * OPay userId
@@ -52,6 +52,15 @@ class InfoUserCreateResponseData
             }
         }
         return $destination;
+    }
+
+    public function jsonSerialize(): array
+    {
+        $data = [];
+        foreach ($this as $key => $val) {
+            if ($val !== null) $data[$key] = $val;
+        }
+        return $data;
     }
 
     public function toArray(): array

@@ -1,12 +1,11 @@
 <?php
 
-
 namespace Opay\Result;
 
-
+use JsonSerializable;
 use stdClass;
 
-class BalancesResponseData
+class BalancesResponseData implements JsonSerializable
 {
     private $value;
     private $currency;
@@ -29,6 +28,15 @@ class BalancesResponseData
         return $destination;
     }
 
+    public function jsonSerialize(): array
+    {
+        $data = [];
+        foreach ($this as $key => $val) {
+            if ($val !== null) $data[$key] = $val;
+        }
+        return $data;
+    }
+
     public function toArray(): array
     {
         return (array)$this;
@@ -48,6 +56,22 @@ class BalancesResponseData
     public function getCurrency()
     {
         return $this->currency;
+    }
+
+    /**
+     * @param mixed $value
+     */
+    public function setValue($value): void
+    {
+        $this->value = $value;
+    }
+
+    /**
+     * @param mixed $currency
+     */
+    public function setCurrency($currency): void
+    {
+        $this->currency = $currency;
     }
 
 

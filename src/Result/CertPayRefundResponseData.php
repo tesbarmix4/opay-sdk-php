@@ -4,7 +4,7 @@
 namespace Opay\Result;
 
 
-class CertPayRefundResponseData
+class CertPayRefundResponseData implements \JsonSerializable
 {
     /**
      * Order number of merchant (unique order number from merchant platform)
@@ -61,6 +61,15 @@ class CertPayRefundResponseData
             }
         }
         return $destination;
+    }
+
+    public function jsonSerialize(): array
+    {
+        $data = [];
+        foreach ($this as $key => $val) {
+            if ($val !== null) $data[$key] = $val;
+        }
+        return $data;
     }
 
     public function toArray(): array

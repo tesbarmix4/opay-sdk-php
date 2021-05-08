@@ -147,10 +147,4 @@ class TransactionInputResponseData
     {
         $this->failureReason = $failureReason;
     }
-
-
-    public function toArray(): array
-    {
-        return (array)$this;
-    }
 }

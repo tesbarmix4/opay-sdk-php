@@ -2,16 +2,16 @@
 
 namespace Opay\Result;
 
-class OrderResponseData
+class OrderResponseData implements \JsonSerializable
 {
-    public $reference;
-    public $orderNo;
-    public $cashierUrl;
-    public $amount;
-    public $currency;
-    public $status;
+    private $reference;
+    private $orderNo;
+    private $cashierUrl;
+    private $amount;
+    private $currency;
+    private $status;
 
-    public static function cast(OrderResponseData $destination, ?\stdClass $source) : OrderResponseData
+    public static function cast(OrderResponseData $destination, ?\stdClass $source): OrderResponseData
     {
         if ($source) {
             $sourceReflection = new \ReflectionObject($source);
@@ -24,8 +24,18 @@ class OrderResponseData
         return $destination;
     }
 
-    public function toArray() : array {
-        return (array) $this;
+    public function jsonSerialize(): array
+    {
+        $data = [];
+        foreach ($this as $key => $val) {
+            if ($val !== null) $data[$key] = $val;
+        }
+        return $data;
+    }
+
+    public function toArray(): array
+    {
+        return (array)$this;
     }
 
     /**
@@ -37,11 +47,27 @@ class OrderResponseData
     }
 
     /**
+     * @param mixed $reference
+     */
+    public function setReference($reference): void
+    {
+        $this->reference = $reference;
+    }
+
+    /**
      * @return mixed
      */
     public function getOrderNo()
     {
         return $this->orderNo;
+    }
+
+    /**
+     * @param mixed $orderNo
+     */
+    public function setOrderNo($orderNo): void
+    {
+        $this->orderNo = $orderNo;
     }
 
     /**
@@ -53,11 +79,27 @@ class OrderResponseData
     }
 
     /**
+     * @param mixed $cashierUrl
+     */
+    public function setCashierUrl($cashierUrl): void
+    {
+        $this->cashierUrl = $cashierUrl;
+    }
+
+    /**
      * @return mixed
      */
     public function getAmount()
     {
         return $this->amount;
+    }
+
+    /**
+     * @param mixed $amount
+     */
+    public function setAmount($amount): void
+    {
+        $this->amount = $amount;
     }
 
     /**
@@ -69,11 +111,28 @@ class OrderResponseData
     }
 
     /**
+     * @param mixed $currency
+     */
+    public function setCurrency($currency): void
+    {
+        $this->currency = $currency;
+    }
+
+    /**
      * @return mixed
      */
     public function getStatus()
     {
         return $this->status;
     }
+
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status): void
+    {
+        $this->status = $status;
+    }
+
 
 }

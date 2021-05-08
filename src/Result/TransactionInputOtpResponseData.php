@@ -4,7 +4,7 @@
 namespace Opay\Result;
 
 
-class TransactionInputOtpResponseData extends TransactionInputResponseData
+class TransactionInputOtpResponseData extends TransactionInputResponseData implements \JsonSerializable
 {
 
     public static function cast(TransactionInputOtpResponseData $destination, ?\stdClass $source): TransactionInputOtpResponseData
@@ -20,4 +20,17 @@ class TransactionInputOtpResponseData extends TransactionInputResponseData
         return $destination;
     }
 
+    public function jsonSerialize(): array
+    {
+        $data = [];
+        foreach ($this as $key => $val) {
+            if ($val !== null) $data[$key] = $val;
+        }
+        return $data;
+    }
+
+    public function toArray(): array
+    {
+        return (array)$this;
+    }
 }

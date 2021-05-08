@@ -4,13 +4,13 @@
 namespace Opay\Result;
 
 
-class CountriesResponseData
+class CountriesResponseData implements \JsonSerializable
 {
-    public $name;
-    public $code;
-    public $currency;
+    private $name;
+    private $code;
+    private $currency;
 
-    public static function cast(CountriesResponseData $destination, ?\stdClass $source) : CountriesResponseData
+    public static function cast(CountriesResponseData $destination, ?\stdClass $source): CountriesResponseData
     {
         if ($source) {
             $sourceReflection = new \ReflectionObject($source);
@@ -23,8 +23,18 @@ class CountriesResponseData
         return $destination;
     }
 
-    public function toArray() : array {
-        return (array) $this;
+    public function jsonSerialize(): array
+    {
+        $data = [];
+        foreach ($this as $key => $val) {
+            if ($val !== null) $data[$key] = $val;
+        }
+        return $data;
+    }
+
+    public function toArray(): array
+    {
+        return (array)$this;
     }
 
     /**
@@ -36,11 +46,27 @@ class CountriesResponseData
     }
 
     /**
+     * @param mixed $name
+     */
+    public function setName($name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
      * @return mixed
      */
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * @param mixed $code
+     */
+    public function setCode($code): void
+    {
+        $this->code = $code;
     }
 
     /**
@@ -50,4 +76,13 @@ class CountriesResponseData
     {
         return $this->currency;
     }
+
+    /**
+     * @param mixed $currency
+     */
+    public function setCurrency($currency): void
+    {
+        $this->currency = $currency;
+    }
+
 }

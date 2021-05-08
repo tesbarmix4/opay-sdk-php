@@ -14,7 +14,7 @@ class OpayTransferResponse extends Response
     /**
      * @return OpayTransferResponseData
      */
-    public function getData() : OpayTransferResponseData
+    public function getData(): OpayTransferResponseData
     {
         return $this->data;
     }

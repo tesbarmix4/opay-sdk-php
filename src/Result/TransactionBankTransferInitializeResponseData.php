@@ -4,7 +4,7 @@
 namespace Opay\Result;
 
 
-class TransactionBankTransferInitializeResponseData
+class TransactionBankTransferInitializeResponseData implements \JsonSerializable
 {
     /**
      * Order number from OPay payment
@@ -168,6 +168,15 @@ class TransactionBankTransferInitializeResponseData
     public function setTransferAccount(string $transferAccount): void
     {
         $this->transferAccount = $transferAccount;
+    }
+
+    public function jsonSerialize(): array
+    {
+        $data = [];
+        foreach ($this as $key => $val) {
+            if ($val !== null) $data[$key] = $val;
+        }
+        return $data;
     }
 
     public function toArray(): array

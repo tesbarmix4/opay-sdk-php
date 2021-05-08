@@ -14,7 +14,7 @@ class ValidateBankAccountResponse extends Response
     /**
      * @return ValidateBankAccountResponseData
      */
-    public function getData() : ValidateBankAccountResponseData
+    public function getData(): ValidateBankAccountResponseData
     {
         return $this->data;
     }

@@ -4,13 +4,13 @@
 namespace Opay\Result;
 
 
-class ValidateOpayMerchantResponseData
+class ValidateOpayMerchantResponseData implements \JsonSerializable
 {
     private $merchantId;
     private $email;
     private $businessName;
 
-    public static function cast(ValidateOpayMerchantResponseData $destination, ?\stdClass $source) : ValidateOpayMerchantResponseData
+    public static function cast(ValidateOpayMerchantResponseData $destination, ?\stdClass $source): ValidateOpayMerchantResponseData
     {
         if ($source) {
             $sourceReflection = new \ReflectionObject($source);
@@ -23,8 +23,18 @@ class ValidateOpayMerchantResponseData
         return $destination;
     }
 
-    public function toArray() : array {
-        return (array) $this;
+    public function jsonSerialize(): array
+    {
+        $data = [];
+        foreach ($this as $key => $val) {
+            if ($val !== null) $data[$key] = $val;
+        }
+        return $data;
+    }
+
+    public function toArray(): array
+    {
+        return (array)$this;
     }
 
     /**
@@ -36,11 +46,27 @@ class ValidateOpayMerchantResponseData
     }
 
     /**
+     * @param mixed $merchantId
+     */
+    public function setMerchantId($merchantId): void
+    {
+        $this->merchantId = $merchantId;
+    }
+
+    /**
      * @return mixed
      */
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email): void
+    {
+        $this->email = $email;
     }
 
     /**
@@ -50,4 +76,14 @@ class ValidateOpayMerchantResponseData
     {
         return $this->businessName;
     }
+
+    /**
+     * @param mixed $businessName
+     */
+    public function setBusinessName($businessName): void
+    {
+        $this->businessName = $businessName;
+    }
+
+
 }

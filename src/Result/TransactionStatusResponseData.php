@@ -4,7 +4,7 @@
 namespace Opay\Result;
 
 
-class TransactionStatusResponseData
+class TransactionStatusResponseData implements \JsonSerializable
 {
     /**
      * Order number from OPay payment
@@ -192,6 +192,15 @@ class TransactionStatusResponseData
     public function setFailureReason(string $failureReason): void
     {
         $this->failureReason = $failureReason;
+    }
+
+    public function jsonSerialize(): array
+    {
+        $data = [];
+        foreach ($this as $key => $val) {
+            if ($val !== null) $data[$key] = $val;
+        }
+        return $data;
     }
 
     public function toArray(): array

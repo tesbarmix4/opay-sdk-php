@@ -4,7 +4,7 @@
 namespace Opay\Result;
 
 
-class TransferBatchToWalletResponseData
+class TransferBatchToWalletResponseData implements \JsonSerializable
 {
     private $data;
 
@@ -21,9 +21,18 @@ class TransferBatchToWalletResponseData
         return $destination;
     }
 
-    public function toArray(): TransferBatchToWalletResponseData
+    public function jsonSerialize(): array
     {
-        return $this;
+        $data = [];
+        foreach ($this as $key => $val) {
+            if ($val !== null) $data[$key] = $val;
+        }
+        return $data;
+    }
+
+    public function toArray(): array
+    {
+        return (array)$this;
     }
 
     /**

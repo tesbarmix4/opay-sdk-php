@@ -4,7 +4,7 @@
 namespace Opay\Result;
 
 
-class TransferBatchToBankResponseData
+class TransferBatchToBankResponseData implements \JsonSerializable
 {
     public static function cast(TransferBatchToBankResponseData $destination, ?\stdClass $source): TransferBatchToBankResponseData
     {
@@ -19,8 +19,17 @@ class TransferBatchToBankResponseData
         return $destination;
     }
 
-    public function toArray(): TransferBatchToBankResponseData
+    public function jsonSerialize(): array
     {
-        return $this;
+        $data = [];
+        foreach ($this as $key => $val) {
+            if ($val !== null) $data[$key] = $val;
+        }
+        return $data;
+    }
+
+    public function toArray(): array
+    {
+        return (array)$this;
     }
 }

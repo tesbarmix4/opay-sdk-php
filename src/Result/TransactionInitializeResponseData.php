@@ -4,7 +4,7 @@
 namespace Opay\Result;
 
 
-class TransactionInitializeResponseData
+class TransactionInitializeResponseData implements \JsonSerializable
 {
     /**
      * Order number from OPay payment
@@ -74,6 +74,15 @@ class TransactionInitializeResponseData
             }
         }
         return $destination;
+    }
+
+    public function jsonSerialize(): array
+    {
+        $data = [];
+        foreach ($this as $key => $val) {
+            if ($val !== null) $data[$key] = $val;
+        }
+        return $data;
     }
 
     public function toArray(): array
