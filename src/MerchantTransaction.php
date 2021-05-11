@@ -6,6 +6,9 @@ namespace Opay;
 
 use GuzzleHttp\RequestOptions;
 use Opay\Result\EgyptTransactionCreateResponse;
+use Opay\Result\EgyptTransactionRefundResponse;
+use Opay\Result\EgyptTransactionRefundStatusResponse;
+use Opay\Result\EgyptTransactionReversalResponse;
 use Opay\Result\EgyptTransactionStatusResponse;
 use Opay\Result\Response;
 use Opay\Result\TransactionBankTransferInitializeResponse;
@@ -33,6 +36,9 @@ class MerchantTransaction extends Merchant
     private $ussdStatusData;
     private $egyptCreateData;
     private $egyptStatusData;
+    private $egyptRefundStatusData;
+    private $egyptRefundData;
+    private $egyptReversalData;
 
 
     /**
@@ -181,13 +187,49 @@ class MerchantTransaction extends Merchant
                 'MerchantId' => $this->merchantId
             ]
         ]));
-        return EgyptTransactionCreateResponse::cast(new EgyptTransactionCreateResponse, json_decode($response->getBody()->getContents(), false));
+        return EgyptTransactionRefundResponse::cast(new EgyptTransactionRefundResponse, json_decode($response->getBody()->getContents(), false));
     }
 
     public function egyptStatus(): Response
     {
         $response = $this->networkClient->post("/api/v1/egypt/transaction/status", $this->buildRequestOptions([
             RequestOptions::JSON => $this->egyptStatusData,
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $this->publicKey,
+                'MerchantId' => $this->merchantId
+            ]
+        ]));
+        return EgyptTransactionRefundStatusResponse::cast(new EgyptTransactionRefundStatusResponse, json_decode($response->getBody()->getContents(), false));
+    }
+
+    public function egyptRefund(): Response
+    {
+        $response = $this->networkClient->post("/api/v1/egypt/transaction/refund", $this->buildRequestOptions([
+            RequestOptions::JSON => $this->egyptRefundData,
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $this->publicKey,
+                'MerchantId' => $this->merchantId
+            ]
+        ]));
+        return EgyptTransactionReversalResponse::cast(new EgyptTransactionReversalResponse, json_decode($response->getBody()->getContents(), false));
+    }
+
+    public function egyptRefundStatus(): Response
+    {
+        $response = $this->networkClient->post("/api/v1/egypt/transaction/refund/status", $this->buildRequestOptions([
+            RequestOptions::JSON => $this->egyptRefundStatusData,
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $this->publicKey,
+                'MerchantId' => $this->merchantId
+            ]
+        ]));
+        return EgyptTransactionStatusResponse::cast(new EgyptTransactionStatusResponse, json_decode($response->getBody()->getContents(), false));
+    }
+
+    public function egyptReversal(): Response
+    {
+        $response = $this->networkClient->post("/api/v1/egypt/transaction/reversal", $this->buildRequestOptions([
+            RequestOptions::JSON => $this->egyptReversalData,
             RequestOptions::HEADERS => [
                 'Authorization' => 'Bearer ' . $this->publicKey,
                 'MerchantId' => $this->merchantId
@@ -388,5 +430,54 @@ class MerchantTransaction extends Merchant
     {
         $this->egyptStatusData = $egyptStatusData;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getEgyptRefundStatusData()
+    {
+        return $this->egyptRefundStatusData;
+    }
+
+    /**
+     * @param mixed $egyptRefundStatusData
+     */
+    public function setEgyptRefundStatusData($egyptRefundStatusData): void
+    {
+        $this->egyptRefundStatusData = $egyptRefundStatusData;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEgyptRefundData()
+    {
+        return $this->egyptRefundData;
+    }
+
+    /**
+     * @param mixed $egyptRefundData
+     */
+    public function setEgyptRefundData($egyptRefundData): void
+    {
+        $this->egyptRefundData = $egyptRefundData;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEgyptReversalData()
+    {
+        return $this->egyptReversalData;
+    }
+
+    /**
+     * @param mixed $egyptReversalData
+     */
+    public function setEgyptReversalData($egyptReversalData): void
+    {
+        $this->egyptReversalData = $egyptReversalData;
+    }
+
 
 }
