@@ -178,7 +178,7 @@ class EgyptTransactionCreateRequest extends BaseRequest implements \JsonSerializ
             'reference' => $this->reference,
             'amount' => [
                 'total' => $this->amountTotal,
-                'currency' => $this->amountCurrency,
+                'currency' => $this->amountCurrency
             ],
             'product' => [
                 'name' => $this->productName,
@@ -187,7 +187,7 @@ class EgyptTransactionCreateRequest extends BaseRequest implements \JsonSerializ
             'returnUrl' => $this->returnUrl,
             'callbackUrl' => $this->callbackUrl,
             'userClientIP' => $this->userClientIP,
-            'remark' => $this->remark,
+            'remark' => $this->remark
         ]);
     }
 }

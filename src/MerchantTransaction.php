@@ -171,9 +171,9 @@ class MerchantTransaction extends Merchant
         return TransactionUssdStatusResponse::cast(new TransactionUssdStatusResponse, json_decode($response->getBody()->getContents(), false));
     }
 
-    public function egyptCreate(): Response
+    public function egyptCreate()
     {
-        $_signature = $this->signature(json_encode($this->egyptCreateData), $this->privateKey);
+        $_signature = $this->signature(json_encode($this->egyptCreateData, JSON_UNESCAPED_SLASHES), $this->privateKey);
         $response = $this->networkClient->post("/api/v1/egypt/transaction/create", $this->buildRequestOptions([
             RequestOptions::JSON => $this->egyptCreateData,
             RequestOptions::HEADERS => [
@@ -186,7 +186,7 @@ class MerchantTransaction extends Merchant
 
     public function egyptStatus(): Response
     {
-        $_signature = $this->signature(json_encode($this->egyptStatusData), $this->privateKey);
+        $_signature = $this->signature(json_encode($this->egyptStatusData, JSON_UNESCAPED_SLASHES), $this->privateKey);
         $response = $this->networkClient->post("/api/v1/egypt/transaction/status", $this->buildRequestOptions([
             RequestOptions::JSON => $this->egyptStatusData,
             RequestOptions::HEADERS => [
