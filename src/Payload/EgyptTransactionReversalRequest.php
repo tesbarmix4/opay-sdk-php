@@ -4,7 +4,7 @@
 namespace Opay\Payload;
 
 
-class EgyptTransactionReversal extends BaseRequest implements \JsonSerializable
+class EgyptTransactionReversalRequest extends BaseRequest implements \JsonSerializable
 {
 
     /**
