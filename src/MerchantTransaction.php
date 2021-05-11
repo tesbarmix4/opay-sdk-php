@@ -173,7 +173,7 @@ class MerchantTransaction extends Merchant
 
     public function egyptCreate(): Response
     {
-        $_signature = $this->signature(json_encode($this->egyptCreateData, JSON_UNESCAPED_SLASHES), $this->privateKey);
+        $_signature = $this->signature(json_encode($this->egyptCreateData, 320), $this->privateKey);
         $response = $this->networkClient->post("/api/v1/egypt/transaction/create", $this->buildRequestOptions([
             RequestOptions::JSON => $this->egyptCreateData,
             RequestOptions::HEADERS => [

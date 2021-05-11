@@ -142,7 +142,7 @@ class MerchantCashier extends Merchant
 
     public final function egyptCashierCreate(): Response
     {
-        $_signature = $this->signature(json_encode($this->egyptCashierCreateData, JSON_UNESCAPED_SLASHES), $this->privateKey);
+        $_signature = $this->signature(json_encode($this->egyptCashierCreateData, 320), $this->privateKey);
         $response = $this->networkClient->post("/api/v1/egypt/cashier/create", $this->buildRequestOptions([
             RequestOptions::JSON => $this->egyptCashierCreateData,
             RequestOptions::HEADERS => [
