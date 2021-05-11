@@ -3,6 +3,7 @@
 namespace Opay;
 
 use GuzzleHttp\RequestOptions;
+use Opay\Payload\EgyptCashierRequest;
 use Opay\Payload\OrderCloseRequest;
 use Opay\Payload\OrderRefundBankAccountRequest;
 use Opay\Payload\OrderRefundOpayAccountRequest;
@@ -10,6 +11,7 @@ use Opay\Payload\OrderRefundOriginalRequest;
 use Opay\Payload\OrderRefundStatusRequest;
 use Opay\Payload\OrderRequest;
 use Opay\Payload\OrderStatusRequest;
+use Opay\Result\EgyptCashierResponse;
 use Opay\Result\OrderRefundResponse;
 use Opay\Result\OrderRefundResponseData;
 use Opay\Result\OrderRefundStatusResponse;
@@ -23,6 +25,7 @@ class MerchantCashier extends Merchant
     private $orderCloseData;
     private $orderRefundData;
     private $orderRefundStatusData;
+    private $egyptCashierCreateData;
 
     public function __construct(string $environmentBaseUrl, string $pbKey, string $pvKey,
                                 string $merchantId, ?array $proxyAddress = null)
@@ -63,6 +66,14 @@ class MerchantCashier extends Merchant
     public final function orderClose(OrderCloseRequest $orderClose): void
     {
         $this->orderCloseData = $orderClose;
+    }
+
+    /**
+     * @param mixed $egyptCashierCreateData
+     */
+    public function setEgyptCashierCreateData(EgyptCashierRequest $egyptCashierCreateData): void
+    {
+        $this->egyptCashierCreateData = $egyptCashierCreateData;
     }
 
     public final function getOrderApiResult(): Response
@@ -129,6 +140,19 @@ class MerchantCashier extends Merchant
         return OrderRefundStatusResponse::cast(new OrderRefundStatusResponse(), json_decode($response->getBody()->getContents(), false));
     }
 
+    public final function egyptCashierCreate(): Response
+    {
+        $_signature = $this->signature(json_encode($this->egyptCashierCreateData), $this->privateKey);
+        $response = $this->networkClient->post("/api/v1/egypt/cashier/create", $this->buildRequestOptions([
+            RequestOptions::JSON => $this->egyptCashierCreateData,
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $_signature,
+                'MerchantId' => $this->merchantId
+            ]
+        ]));
+        return EgyptCashierResponse::cast(new EgyptCashierResponse(), json_decode($response->getBody()->getContents(), false));
+    }
+
     /**
      * @return OrderRequest
      */
@@ -169,5 +193,12 @@ class MerchantCashier extends Merchant
         return $this->orderRefundStatusData;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getEgyptCashierCreateData()
+    {
+        return $this->egyptCashierCreateData;
+    }
 
 }

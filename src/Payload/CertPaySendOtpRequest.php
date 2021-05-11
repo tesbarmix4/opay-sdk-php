@@ -17,7 +17,7 @@ class CertPaySendOtpRequest extends BaseRequest implements \JsonSerializable
      * Order number of OPay payment
      * @var string
      */
-    private $orderNo;
+    private $orderNo = '';
     /**
      * Payment method user selected
      * @var string

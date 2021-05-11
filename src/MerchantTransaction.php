@@ -5,6 +5,8 @@ namespace Opay;
 
 
 use GuzzleHttp\RequestOptions;
+use Opay\Result\EgyptTransactionCreateResponse;
+use Opay\Result\EgyptTransactionStatusResponse;
 use Opay\Result\Response;
 use Opay\Result\TransactionBankTransferInitializeResponse;
 use Opay\Result\TransactionBankTransferStatusResponse;
@@ -29,6 +31,9 @@ class MerchantTransaction extends Merchant
     private $ussdInitializeData;
     private $bankTransferStatusData;
     private $ussdStatusData;
+    private $egyptCreateData;
+    private $egyptStatusData;
+
 
     /**
      * MerchantTransaction constructor.
@@ -164,6 +169,32 @@ class MerchantTransaction extends Merchant
             ]
         ]));
         return TransactionUssdStatusResponse::cast(new TransactionUssdStatusResponse, json_decode($response->getBody()->getContents(), false));
+    }
+
+    public function egyptCreate(): Response
+    {
+        $_signature = $this->signature(json_encode($this->egyptCreateData), $this->privateKey);
+        $response = $this->networkClient->post("/api/v1/egypt/transaction/create", $this->buildRequestOptions([
+            RequestOptions::JSON => $this->egyptCreateData,
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $_signature,
+                'MerchantId' => $this->merchantId
+            ]
+        ]));
+        return EgyptTransactionCreateResponse::cast(new EgyptTransactionCreateResponse, json_decode($response->getBody()->getContents(), false));
+    }
+
+    public function egyptStatus(): Response
+    {
+        $_signature = $this->signature(json_encode($this->egyptStatusData), $this->privateKey);
+        $response = $this->networkClient->post("/api/v1/egypt/transaction/status", $this->buildRequestOptions([
+            RequestOptions::JSON => $this->egyptStatusData,
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $_signature,
+                'MerchantId' => $this->merchantId
+            ]
+        ]));
+        return EgyptTransactionStatusResponse::cast(new EgyptTransactionStatusResponse, json_decode($response->getBody()->getContents(), false));
     }
 
     /**
@@ -326,5 +357,37 @@ class MerchantTransaction extends Merchant
         $this->ussdStatusData = $ussdStatusData;
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function getEgyptCreateData()
+    {
+        return $this->egyptCreateData;
+    }
+
+    /**
+     * @param mixed $egyptCreateData
+     */
+    public function setEgyptCreateData($egyptCreateData): void
+    {
+        $this->egyptCreateData = $egyptCreateData;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEgyptStatusData()
+    {
+        return $this->egyptStatusData;
+    }
+
+    /**
+     * @param mixed $egyptStatusData
+     */
+    public function setEgyptStatusData($egyptStatusData): void
+    {
+        $this->egyptStatusData = $egyptStatusData;
+    }
 
 }

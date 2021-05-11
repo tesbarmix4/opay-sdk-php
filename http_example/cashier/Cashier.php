@@ -1,6 +1,7 @@
 <?php
 
 use Opay\MerchantCashier;
+use Opay\Payload\EgyptCashierRequest;
 use Opay\Payload\OrderCloseRequest;
 use Opay\Payload\OrderRefundBankAccountRequest;
 use Opay\Payload\OrderRefundOpayAccountRequest;
@@ -17,6 +18,7 @@ require_once('../Config.php');
 class Cashier extends Initialize
 {
     private $merchantCashier;
+
 
     public function __construct()
     {
@@ -135,7 +137,21 @@ class Cashier extends Initialize
         return $this->merchantCashier->getOrderRefundStatusApiResult();
     }
 
-
+    public function egyptCreate(): Response
+    {
+        $request = new EgyptCashierRequest();
+        $request->setReference($this->getReference());
+        $request->setAmountTotal(100);
+        $request->setAmountCurrency("EGP");
+        $request->setProductName("test product");
+        $request->setProductDescription("test product description");
+        $request->setCallbackUrl($this->config->getHostBaseUrl() . '/cashier/CashierCallback.php');
+        $request->setReturnUrl($this->config->getHostBaseUrl() . '/success.php');
+        $request->setUserClientIP($this->getUserIP());
+        $request->setRemark('remark');
+        $this->merchantCashier->setEgyptCashierCreateData($request);
+        return $this->merchantCashier->egyptCashierCreate();
+    }
 }
 
 
@@ -164,4 +180,8 @@ class Cashier extends Initialize
  * $response = $cashier->close();
  * dump($response);
  */
+
+$cashier = new Cashier();
+echo json_encode($cashier->egyptCreate());
+
 

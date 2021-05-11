@@ -11,13 +11,13 @@ class TransactionInputPinRequest extends BaseRequest implements \JsonSerializabl
      * Order number of OPay payment
      * @var string
      */
-    private $orderNo;
+    private $orderNo = '';
 
     /**
      * Order number of merchant (unique order number from merchant platform)
      * @var string
      */
-    private $reference;
+    private $reference = '';
 
     /**
      * PIN submitted by user

@@ -17,7 +17,7 @@ class CertPayVerifyPinRequest extends BaseRequest implements \JsonSerializable
      * Order number of OPay payment
      * @var string
      */
-    private $orderNo;
+    private $orderNo = '';
     /**
      * User's mobile phone number. e.g. +2349876543210
      * @var string

@@ -17,7 +17,7 @@ class CertPayStatusRequest extends BaseRequest implements \JsonSerializable
      * Order number of OPay payment
      * @var string
      */
-    private $orderNo;
+    private $orderNo = '';
 
     /**
      * @return string

@@ -17,7 +17,7 @@ class TransactionUssdStatusRequest extends BaseRequest implements \JsonSerializa
      * Order number of OPay payment
      * @var string
      */
-    private $orderNo;
+    private $orderNo = '';
 
     /**
      * @return string

@@ -11,13 +11,13 @@ class TransactionStatusRequest extends BaseRequest implements \JsonSerializable
      * Order number of OPay payment
      * @var string
      */
-    private $orderNo;
+    private $orderNo = '';
 
     /**
      * Order number of merchant (unique order number from merchant platform)
      * @var string
      */
-    private $reference;
+    private $reference = '';
 
 
     public function jsonSerialize(): array

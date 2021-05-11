@@ -17,7 +17,7 @@ class TransactionBankTransferStatusRequest extends BaseRequest implements \JsonS
      * Order number of OPay payment
      * @var string
      */
-    private $orderNo;
+    private $orderNo = '';
 
     /**
      * @return string
