@@ -193,7 +193,7 @@ class EgyptCashierRequest extends BaseRequest implements \JsonSerializable
         return $this->sort([
             'reference' => $this->reference,
             'amount' => [
-                'total' => $this->amountTotal,
+                'total' => (int)$this->amountTotal,
                 'currency' => $this->amountCurrency,
             ],
             'product' => [
@@ -204,7 +204,7 @@ class EgyptCashierRequest extends BaseRequest implements \JsonSerializable
             'callbackUrl' => $this->callbackUrl,
             'userClientIP' => $this->userClientIP,
             'remark' => $this->remark,
-            'expireAt' => $this->expireAt
+            'expireAt' => (int)$this->expireAt
         ]);
     }
 }
