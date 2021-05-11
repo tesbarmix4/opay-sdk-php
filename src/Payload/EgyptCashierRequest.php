@@ -25,6 +25,8 @@ class EgyptCashierRequest extends BaseRequest implements \JsonSerializable
 
     private $remark;
 
+    private $expireAt;
+
     /**
      * @return mixed
      */
@@ -169,6 +171,23 @@ class EgyptCashierRequest extends BaseRequest implements \JsonSerializable
         $this->remark = $remark;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getExpireAt()
+    {
+        return $this->expireAt;
+    }
+
+    /**
+     * @param mixed $expireAt
+     */
+    public function setExpireAt($expireAt): void
+    {
+        $this->expireAt = $expireAt;
+    }
+
+
     public function jsonSerialize()
     {
         return $this->sort([
@@ -185,6 +204,7 @@ class EgyptCashierRequest extends BaseRequest implements \JsonSerializable
             'callbackUrl' => $this->callbackUrl,
             'userClientIP' => $this->userClientIP,
             'remark' => $this->remark,
+            'expireAt' => $this->expireAt
         ]);
     }
 }
