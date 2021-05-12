@@ -141,9 +141,12 @@ class Cashier extends Initialize
     {
         $request = new EgyptCashierRequest();
         $request->setReference($this->getReference());
-        $request->setAmountTotal(100);
+        $request->setAmountTotal(2000);
         $request->setAmountCurrency("EGP");
+        $request->setProductCode("test product");
         $request->setProductName("test product");
+        $request->setProductPrice(1000);
+        $request->setProductQuantity(2);
         $request->setProductDescription("test product description");
         $request->setCallbackUrl($this->config->getHostBaseUrl() . '/cashier/CashierCallback.php');
         $request->setReturnUrl($this->config->getHostBaseUrl() . '/success.php');

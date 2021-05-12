@@ -27,6 +27,13 @@ class EgyptCashierRequest extends BaseRequest implements \JsonSerializable
 
     private $expireAt;
 
+    private $productCode;
+
+    private $productPrice;
+
+    private $productQuantity;
+
+
     /**
      * @return mixed
      */
@@ -187,6 +194,53 @@ class EgyptCashierRequest extends BaseRequest implements \JsonSerializable
         $this->expireAt = $expireAt;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getProductCode()
+    {
+        return $this->productCode;
+    }
+
+    /**
+     * @param mixed $productCode
+     */
+    public function setProductCode($productCode): void
+    {
+        $this->productCode = $productCode;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProductPrice()
+    {
+        return $this->productPrice;
+    }
+
+    /**
+     * @param mixed $productPrice
+     */
+    public function setProductPrice($productPrice): void
+    {
+        $this->productPrice = $productPrice;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProductQuantity()
+    {
+        return $this->productQuantity;
+    }
+
+    /**
+     * @param mixed $productQuantity
+     */
+    public function setProductQuantity($productQuantity): void
+    {
+        $this->productQuantity = $productQuantity;
+    }
 
     public function jsonSerialize()
     {
@@ -197,7 +251,10 @@ class EgyptCashierRequest extends BaseRequest implements \JsonSerializable
                 'currency' => $this->amountCurrency,
             ],
             'product' => [
+                'code' => $this->productCode,
                 'name' => $this->productName,
+                'price' => (int)$this->productPrice,
+                'quantity' => (int)$this->productQuantity,
                 'description' => $this->productDescription
             ],
             'returnUrl' => $this->returnUrl,
