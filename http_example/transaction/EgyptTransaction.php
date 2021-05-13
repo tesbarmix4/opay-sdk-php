@@ -2,6 +2,9 @@
 
 use Opay\MerchantTransaction;
 use Opay\Payload\EgyptTransactionCreateRequest;
+use Opay\Payload\EgyptTransactionRefundRequest;
+use Opay\Payload\EgyptTransactionRefundStatusRequest;
+use Opay\Payload\EgyptTransactionReversalRequest;
 use Opay\Payload\EgyptTransactionStatusRequest;
 use Opay\Payload\TransactionInitializeRequest;
 use Opay\Payload\TransactionInputDobRequest;
@@ -48,15 +51,45 @@ class EgyptTransaction extends Initialize
     public function status(): Response
     {
         $request = new EgyptTransactionStatusRequest();
-        $request->setReference($this->getReference());
-        $request->setOrderNo($this->getOrderNumber());
+        $request->setReference('test_2021051111483427759');
+        $request->setOrderNo('10210511100000001068');
         $this->transaction->setEgyptStatusData($request);
         return $this->transaction->egyptStatus();
     }
+
+
+    public function refund(): Response
+    {
+        $request = new EgyptTransactionRefundRequest();
+        $request->setReference('test_2021051111483427759');
+        $request->setOrderNo('10210511100000001068');
+        $this->transaction->setEgyptRefundData($request);
+        return $this->transaction->egyptRefund();
+    }
+
+    public function refundStatus(): Response
+    {
+        $request = new EgyptTransactionRefundStatusRequest();
+        $request->setOrderNo('10210511100000001068');
+        $this->transaction->setEgyptRefundStatusData($request);
+        return $this->transaction->egyptRefundStatus();
+    }
+
+    public function reversal(): Response
+    {
+        $request = new EgyptTransactionReversalRequest();
+        $request->setReference('test_2021051111483427759');
+        $request->setOrderNo('10210511100000001068');
+        $this->transaction->setEgyptReversalData($request);
+        return $this->transaction->egyptReversal();
+    }
+
 }
 
 
 $transaction = new EgyptTransaction();
-echo json_encode($transaction->create());
-
-echo json_encode($transaction->status());
+//echo json_encode($transaction->create());
+//echo json_encode($transaction->status());
+//echo json_encode($transaction->refund());
+//echo json_encode($transaction->refundStatus());
+echo json_encode($transaction->reversal());

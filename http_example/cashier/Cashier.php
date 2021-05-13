@@ -2,6 +2,7 @@
 
 use Opay\MerchantCashier;
 use Opay\Payload\EgyptCashierRequest;
+use Opay\Payload\EgyptCashierStatusRequest;
 use Opay\Payload\OrderCloseRequest;
 use Opay\Payload\OrderRefundBankAccountRequest;
 use Opay\Payload\OrderRefundOpayAccountRequest;
@@ -155,6 +156,15 @@ class Cashier extends Initialize
         $this->merchantCashier->setEgyptCashierCreateData($request);
         return $this->merchantCashier->egyptCashierCreate();
     }
+
+    public function egyptStatus(): Response
+    {
+        $request = new EgyptCashierStatusRequest();
+        $request->setReference('test_2021051213443029620');
+        $request->setOrderNo('10210512100000006003');
+        $this->merchantCashier->setEgyptCashierStatusData($request);
+        return $this->merchantCashier->egyptCashierStatus();
+    }
 }
 
 
@@ -185,6 +195,6 @@ class Cashier extends Initialize
  */
 
 $cashier = new Cashier();
-echo json_encode($cashier->egyptCreate());
+echo json_encode($cashier->egyptStatus(), 320);
 
 

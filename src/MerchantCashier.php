@@ -12,6 +12,7 @@ use Opay\Payload\OrderRefundStatusRequest;
 use Opay\Payload\OrderRequest;
 use Opay\Payload\OrderStatusRequest;
 use Opay\Result\EgyptCashierResponse;
+use Opay\Result\EgyptCashierStatusResponse;
 use Opay\Result\OrderRefundResponse;
 use Opay\Result\OrderRefundResponseData;
 use Opay\Result\OrderRefundStatusResponse;
@@ -26,6 +27,7 @@ class MerchantCashier extends Merchant
     private $orderRefundData;
     private $orderRefundStatusData;
     private $egyptCashierCreateData;
+    private $egyptCashierStatusData;
 
     public function __construct(string $environmentBaseUrl, string $pbKey, string $pvKey,
                                 string $merchantId, ?array $proxyAddress = null)
@@ -153,6 +155,18 @@ class MerchantCashier extends Merchant
         return EgyptCashierResponse::cast(new EgyptCashierResponse(), json_decode($response->getBody()->getContents(), false));
     }
 
+    public final function egyptCashierStatus(): Response
+    {
+        $response = $this->networkClient->post("/api/v1/egypt/cashier/status", $this->buildRequestOptions([
+            RequestOptions::JSON => $this->egyptCashierStatusData,
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer ' . $this->publicKey,
+                'MerchantId' => $this->merchantId
+            ]
+        ]));
+        return EgyptCashierStatusResponse::cast(new EgyptCashierStatusResponse(), json_decode($response->getBody()->getContents(), false));
+    }
+
     /**
      * @return OrderRequest
      */
@@ -199,6 +213,22 @@ class MerchantCashier extends Merchant
     public function getEgyptCashierCreateData()
     {
         return $this->egyptCashierCreateData;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEgyptCashierStatusData()
+    {
+        return $this->egyptCashierStatusData;
+    }
+
+    /**
+     * @param mixed $egyptCashierStatusData
+     */
+    public function setEgyptCashierStatusData($egyptCashierStatusData): void
+    {
+        $this->egyptCashierStatusData = $egyptCashierStatusData;
     }
 
 }
